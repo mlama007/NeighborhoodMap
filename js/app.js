@@ -91,28 +91,31 @@ function initMap() {
 		markers.push(marker);
 
 		bounds.extend(markers[i].position);
+
+		// Two event listeners - one for mouseover, one for mouseout,
+		// to change the colors back and forth.
+		marker.addListener('mouseover', mouseover);
+		
+		marker.addListener('mouseout', mouseout);
+
+		// Create an onclick event to open an infowindow at each marker.
+		marker.addListener('click', clicked);
 	}
 	// Extend the boundaries of the map for each marker
 	map.fitBounds(bounds);
-
-	// Two event listeners - one for mouseover, one for mouseout,
-	// to change the colors back and forth.
-	marker.addListener('mouseover', function() {
+	
+	function mouseover() {
 		this.setIcon(highlightedIcon);
-	});
-	
-	marker.addListener('mouseout', function() {
-		this.setIcon(defaultIcon);
-	});
-
-	// Create an onclick event to open an infowindow at each marker.
-	marker.addListener('click', function() {
-		populateInfoWindow(this, largeInfowindow);
-	});
-
 	}
-	
 
+	function mouseout() {
+		this.setIcon(defaultIcon);
+	}
+
+	function clicked() {
+		populateInfoWindow(this, largeInfowindow);
+	}
+}
 
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
