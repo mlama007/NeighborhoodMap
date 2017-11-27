@@ -86,31 +86,32 @@ function initMap() {
 			icon:  defaultIcon,
 			animation: google.maps.Animation.DROP,
 			id: i
-		});		
+		});
+		// Push the marker to our array of markers.
+		markers.push(marker);
+
+		bounds.extend(markers[i].position);
+
+		// Two event listeners - one for mouseover, one for mouseout,
+		// to change the colors back and forth.
+		marker.addListener('mouseover', function() {
+			this.setIcon(highlightedIcon);
+		});
+		
+		marker.addListener('mouseout', function() {
+			this.setIcon(defaultIcon);
+		});
+
+		// Create an onclick event to open an infowindow at each marker.
+		marker.addListener('click', function() {
+			populateInfoWindow(this, largeInfowindow);
+		});
 	}
-	// Push the marker to our array of markers.
-	markers.push(marker);
-	
-	// Two event listeners - one for mouseover, one for mouseout,
-	// to change the colors back and forth.
-	marker.addListener('mouseover', function() {
-		this.setIcon(highlightedIcon);
-	});
-	
-	marker.addListener('mouseout', function() {
-		this.setIcon(defaultIcon);
-	});
-
-	// Create an onclick event to open an infowindow at each marker.
-	marker.addListener('click', function() {
-		populateInfoWindow(this, largeInfowindow);
-	});
-
-	bounds.extend(markers[i].position);
-	
 	// Extend the boundaries of the map for each marker
 	map.fitBounds(bounds);
 	}
+
+
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
 // one infowindow which will open at the marker that is clicked, and populate based
