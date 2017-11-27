@@ -1,13 +1,17 @@
 function AppViewModel() {
-	let self = this;
- 
-    self.location = ko.observableArray([
-        {title: 'Bora-Bora Pearl Beach Resort & Spa', location: {lat: -16.477894, lng: -151.771651}},
-		{title: 'Conrad Bora Bora Nui', location: {lat: -16.529282, lng: -151.772837}},
-		{title: 'Bora Bora Lagoonarium', location: {lat: -16.495317, lng: -151.703044}},
-		{title: 'Plage Matira', location: {lat: -16.542339, lng: -151.737281}},
-		{title: 'Four Seasons Resort Bora Bora', location: {lat: -16.472734, lng: -151.708089}}
-    ]);
+	var self = this;
+	
+		self.locations= [
+			{title: 'Bora-Bora Pearl Beach Resort & Spa', location: {lat: -16.477894, lng: -151.771651}},
+			{title: 'Conrad Bora Bora Nui', location: {lat: -16.529282, lng: -151.772837}},
+			{title: 'Bora Bora Lagoonarium', location: {lat: -16.495317, lng: -151.703044}},
+			{title: 'Plage Matira', location: {lat: -16.542339, lng: -151.737281}},
+			{title: 'Four Seasons Resort Bora Bora', location: {lat: -16.472734, lng: -151.708089}}
+		];    
+	
+		self.location= ko.observableArray([
+			new filter(self.locations[0]),
+		]);
 	
 	//Operations
 	self.openFilter = function(){
@@ -26,10 +30,17 @@ function AppViewModel() {
 	};
 
 }
- 
+
 ko.applyBindings(new AppViewModel());
 
+function filter(avaliableLocations) {
+	var self = this;
+	self.location= ko.observable(avaliableLocations);
+	
+}
 
+
+//MAP
 var map;
 
 // Create a new blank array for all the listing markers.

@@ -16,13 +16,11 @@
 		<!-- FILTER MENU -->
 		<div id="filterMenu">		
 			<h2>Locations</h2>
-			<input id="search" placeholder="Look for places..">		
 			<ul data-bind="foreach: location">
-				<li  data-bind="text: title"></li>
+				<select data-bind="options: $root.locations, optionsText: 'title'"></select>					
 			</ul>
 		</div>
-
-
+			
 		<!-- MAP -->
 		<div id="map"></div>
 
