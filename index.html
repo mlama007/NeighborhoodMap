@@ -16,9 +16,10 @@
 		<!-- FILTER MENU -->
 		<div id="filterMenu">		
 			<h2>Locations</h2>
-			<h5 data-bind="foreach: location">
-				<p><span data-bind="text: title"></span></p>
-			</h5>
+			<input id="search" placeholder="Look for places..">		
+			<ul data-bind="foreach: location">
+				<li  data-bind="text: title"></li>
+			</ul>
 		</div>
 
 

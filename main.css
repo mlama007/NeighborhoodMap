@@ -4,13 +4,14 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: rgba(0,0,0,0.2);  
+  background-color: rgb(29, 28, 28);
 }
 
 #map {
   height: 100%;
   left: 0;
   right: 0;
+  position: relative;
 }
 
 /* Header */
@@ -26,7 +27,7 @@ body {
 }
 
 .header {
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgb(29, 28, 28);
   padding: .8em 1em 2.2em 1em;
   width: 100%;
 }
@@ -39,14 +40,17 @@ body {
 
 /* FILTER MENU */
 #filterMenu {
-
-  height: 100%;
+  width: 16%;
   display: none;
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgb(29, 28, 28);
   color: #fff;
-  padding-left: 2em;
+  padding-left: 1.5em;
 }
-#filterMenu h2 {
+#filterMenu h2,
+ul{
   margin: 0;
   padding: .5em;
 }  
+#filterMenu li {
+  padding: 1em .5em;
+}

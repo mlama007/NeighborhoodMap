@@ -15,17 +15,20 @@ function AppViewModel() {
 		let filterElem = document.getElementById('filterMenu');		
 		if (filterElem.style.display == "none") {
 			filterElem.style.display = "block";
-			filterElem.style.width = "16%";
-			mapElem.style.width = "82%";
+			mapElem.style.width = "81%";
 			mapElem.style.float = "right";
 			filterElem.style.float = "left";
 		} else {
 			filterElem.style.display = "none";
-		}
-	}
+			mapElem.style.width = "100%";
+			mapElem.style.float = "none";
+		};
+	};
+
 }
  
 ko.applyBindings(new AppViewModel());
+
 
 var map;
 
@@ -53,6 +56,13 @@ function initMap() {
 	var largeInfowindow = new google.maps.InfoWindow();
 	var bounds = new google.maps.LatLngBounds();
 
+	// Style the markers a bit. This will be our listing marker icon.
+	var defaultIcon = makeMarkerIcon('7161EF');
+	
+	// Create a "highlighted location" marker color for when the user
+	// mouses over the marker.
+	var highlightedIcon = makeMarkerIcon('68efad');
+
 	// The following group uses the location array to create an array of markers on initialize.
 	for (var i = 0; i < locations.length; i++) {
 		// Get the position from the location array.
@@ -63,11 +73,23 @@ function initMap() {
 			map: map,
 			position: position,
 			title: title,
+			icon:  defaultIcon,
 			animation: google.maps.Animation.DROP,
 			id: i
 		});
 		// Push the marker to our array of markers.
 		markers.push(marker);
+
+		// Two event listeners - one for mouseover, one for mouseout,
+        // to change the colors back and forth.
+		marker.addListener('mouseover', function() {
+			this.setIcon(highlightedIcon);
+		});
+		
+		marker.addListener('mouseout', function() {
+			this.setIcon(defaultIcon);
+		});
+
 		// Create an onclick event to open an infowindow at each marker.
 		marker.addListener('click', function() {
 			populateInfoWindow(this, largeInfowindow);
@@ -92,5 +114,16 @@ function populateInfoWindow(marker, infowindow) {
 			infowindow.setMarker = null;
 		});
 	}
+}
+
+function makeMarkerIcon(markerColor) {
+	var markerImage = new google.maps.MarkerImage(
+	  'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
+	  '|40|_|%E2%80%A2',
+	  new google.maps.Size(21, 34),
+	  new google.maps.Point(0, 0),
+	  new google.maps.Point(10, 34),
+	  new google.maps.Size(21,34));
+	return markerImage;
 }
 
