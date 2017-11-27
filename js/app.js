@@ -28,9 +28,6 @@ function AppViewModel() {
 			mapElem.style.float = "none";
 		};
 	};
-
-	// Make formula to look for wiki summary of each location selected
-
 }
 
 ko.applyBindings(new AppViewModel());
