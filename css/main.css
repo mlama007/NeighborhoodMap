@@ -4,21 +4,21 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background-color: rgb(29, 28, 28);
 }
 
 #map {
-  top: 3em;
   height: 100%;
   left: 0;
-  position: absolute;
   right: 0;
+  position: relative;
 }
-
 
 /* Header */
 #hamburgerMenu {
   float: left;
   margin-left: 5em;
+  margin-top: -0.2em;
 }
 
 #title{
@@ -27,8 +27,9 @@ body {
 }
 
 .header {
-  background-color: rgba(0,0,0,0.8);
-  padding: 10px 0;
+  background-color: rgb(29, 28, 28);
+  padding: .8em 1em 2.2em 1em;
+  width: 100%;
 }
 
 .header h1 {
@@ -37,6 +38,18 @@ body {
   margin: 0 0 0 .5em;
 }
 
-.menu {
-  visibility:hidden;
+/* FILTER MENU */
+#filterMenu {
+  display: none;
+  background-color: rgb(29, 28, 28);
+  color: #fff;
+  padding-left: 1.5em;
+}
+#filterMenu h2,
+ul{
+  margin: 0;
+  padding: .5em;
+}  
+#filterMenu li {
+  padding: 1em .5em;
 }

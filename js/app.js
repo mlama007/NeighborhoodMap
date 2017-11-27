@@ -19,7 +19,7 @@ function AppViewModel() {
 		let filterElem = document.getElementById('filterMenu');		
 		if (filterElem.style.display == "none") {
 			filterElem.style.display = "block";
-			mapElem.style.width = "81%";
+			mapElem.style.width = "70%";
 			mapElem.style.float = "right";
 			filterElem.style.float = "left";
 		} else {
@@ -28,6 +28,8 @@ function AppViewModel() {
 			mapElem.style.float = "none";
 		};
 	};
+
+	// Make formula to look for wiki summary of each location selected
 
 }
 

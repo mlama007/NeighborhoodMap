@@ -4,7 +4,9 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<title>Neighborhood Map</title>
-		<link rel="stylesheet" type="text/css" href="main.css">
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link rel="stylesheet" type="text/css" href="css/responsive.css">
+		<link rel="EditURI" type="application/rsd+xml" href="//www.mediawiki.org/w/api.php?action=rsd" />
 		<style type="text/css"></style>
 	</head>
 	<body>
@@ -17,7 +19,8 @@
 		<div id="filterMenu">		
 			<h2>Locations</h2>
 			<ul data-bind="foreach: location">
-				<select data-bind="options: $root.locations, optionsText: 'title'"></select>					
+				<select data-bind="options: $root.locations, optionsText: 'title'"></select>
+				<!--add a wiki summary of each location selected-->
 			</ul>
 		</div>
 			
