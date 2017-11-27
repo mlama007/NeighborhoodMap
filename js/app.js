@@ -35,9 +35,7 @@ ko.applyBindings(new AppViewModel());
 function filter(avaliableLocations) {
 	var self = this;
 	self.location= ko.observable(avaliableLocations);
-	
 }
-
 
 //MAP
 var map;
@@ -95,7 +93,6 @@ function initMap() {
 		// Two event listeners - one for mouseover, one for mouseout,
 		// to change the colors back and forth.
 		marker.addListener('mouseover', mouseover);
-		
 		marker.addListener('mouseout', mouseout);
 
 		// Create an onclick event to open an infowindow at each marker.
@@ -107,12 +104,14 @@ function initMap() {
 	function mouseover() {
 		this.setIcon(highlightedIcon);
 	}
-
 	function mouseout() {
 		this.setIcon(defaultIcon);
 	}
 
 	function clicked() {
+		let self = this;
+		self.setAnimation(google.maps.Animation.BOUNCE);
+		setTimeout(function(){ self.setAnimation(null); }, 750);
 		populateInfoWindow(this, largeInfowindow);
 	}
 }
@@ -126,10 +125,11 @@ function populateInfoWindow(marker, infowindow) {
 	if (infowindow.marker != marker) {
 		infowindow.marker = marker;
 		infowindow.setContent('<div>' + marker.title + '</div>');
+		//add some 3rd party info
 		infowindow.open(map, marker);
 		// Make sure the marker property is cleared if the infowindow is closed.
 		infowindow.addListener('closeclick',function(){
-			infowindow.setMarker = null;
+			infowindow.setMarker = null;				
 		});
 	}
 }
@@ -145,3 +145,6 @@ function makeMarkerIcon(markerColor) {
 	return markerImage;
 }
 
+function mapError(){
+	alert("Map could not load.");
+}
