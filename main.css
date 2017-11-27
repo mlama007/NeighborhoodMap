@@ -1,0 +1,52 @@
+html,
+body {
+  font-family: Arial, sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0,0,0,0.2);  
+}
+
+#map {
+  height: 100%;
+  left: 0;
+  right: 0;
+}
+
+/* Header */
+#hamburgerMenu {
+  float: left;
+  margin-left: 5em;
+  margin-top: -0.2em;
+}
+
+#title{
+  float: right;
+  margin-right: 5em;
+}
+
+.header {
+  background-color: rgba(0,0,0,0.8);
+  padding: .8em 1em 2.2em 1em;
+  width: 100%;
+}
+
+.header h1 {
+  color: #fff;
+  font-size: 1.5em;
+  margin: 0 0 0 .5em;
+}
+
+/* FILTER MENU */
+#filterMenu {
+
+  height: 100%;
+  display: none;
+  background-color: rgba(0,0,0,0.8);
+  color: #fff;
+  padding-left: 2em;
+}
+#filterMenu h2 {
+  margin: 0;
+  padding: .5em;
+}  

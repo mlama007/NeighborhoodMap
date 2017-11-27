@@ -1,31 +1,36 @@
-<!doctype html>
-<html lang="en" data-framework="backbonejs">
+<!DOCTYPE html>
+<html lang="en">
 	<head>
-		<meta charset="utf-8">
-		<title>Bora Bora</title>
-		<link rel="stylesheet" href="css/main.css">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>Neighborhood Map</title>
+		<link rel="stylesheet" type="text/css" href="main.css">
+		<style type="text/css"></style>
 	</head>
-		<body>
+	<body>
+		<!-- HEADER -->
+		<div class="header">
+			<h1> <span id="hamburgerMenu" data-bind="click: openFilter" >&#9776;</span><span id="title">My Dream Vacation</span></h1>			
+		</div>
 
-			<!-- HEADER -->
-			<div class="header">
-				<h1> <span id="hamburgerMenu">&#9776;</span><span id="title">My Dream Vacation</span></h1>			
-				<!-- FILTER MENU -->
-				<div>
-					<ul>
-						<li></li>
-					</ul>
-				</div>
-			</div>
+		<!-- FILTER MENU -->
+		<div id="filterMenu">		
+			<h2>Locations</h2>
+			<h5 data-bind="foreach: location">
+				<p><span data-bind="text: title"></span></p>
+			</h5>
+		</div>
 
-			<!-- MAP -->
-			<div id="map"></div>
 
-			<!-- SCRIPTS -->
-		  	<script async defer src=
-		  		"https://maps.googleapis.com/maps/api/js?key=AIzaSyDb6Ea35UOu4hSZjPZ7H5MJBoZaJIFTLmQ&libraries=geometry&v=3&callback=initMap">
-			</script>
-			<script type='text/javascript' src='knockout-3.4.2.js'></script>			
-			<script src="js/app.js"></script>
-		</body>
+		<!-- MAP -->
+		<div id="map"></div>
+
+		<!-- SCRIPTS -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="js/knockout-3.2.0.js"></script>
+		<script src="js/app.js"></script>
+		<script
+			async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDb6Ea35UOu4hSZjPZ7H5MJBoZaJIFTLmQ&libraries=geometry&v=3&callback=initMap" onerror="mapError()">
+		</script>
+	</body>
 </html>
