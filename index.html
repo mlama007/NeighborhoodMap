@@ -6,10 +6,11 @@
 		<title>Neighborhood Map</title>
 		<link rel="stylesheet" href="css/main.css">
 		<link rel="stylesheet" href="css/responsive.css">
-		<link rel="EditURI" type="application/rsd+xml" href="//www.mediawiki.org/w/api.php?action=rsd" />
 		<style type="text/css"></style>
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>		
 	</head>
 	<body>
+
 		<!-- HEADER -->
 		<div class="header">
 			<h1> <span id="hamburgerMenu" data-bind="click: openFilter" >&#9776;</span><span id="title">My Dream Vacation</span></h1>			
@@ -19,7 +20,30 @@
 		<div id="filterMenu">		
 			<h2>Locations</h2>
 			<ul data-bind="foreach: location">
-				<select data-bind="options: $root.locations, optionsText: 'title'"></select>
+				<select id="selectedLocation" data-bind="optionsCaption: 'Choose..', options: $root.locations, optionsText: 'title'"></select>
+				
+				<!-- Wikipedia -->
+				<div id="wikiInfo">
+					<form action="" method="GET" class="form-inline">
+						<input style="display: none" name="url" type="text" class="url span6" value="https://en.wikipedia.org/wiki/Bora_Bora">
+						<button>Go »</button>
+					</form>
+
+					<div class="results">		
+						<div class="summary well">
+							<img src="" class="thumbnail">
+							<h4><span class="title"> </span></h4>
+							<p>
+								<span class="type"></span>
+								<br><span class="place"></span>
+								<br><span class="start"></span> — <span class="end"></span>
+							</p>
+							<p class="summary"></p>
+							<div class="clear"></div>
+						</div>		
+					</div>
+				</div>
+				
 			</ul>
 		</div>
 			
@@ -27,7 +51,6 @@
 		<div id="map"></div>
 
 		<!-- SCRIPTS -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="js/knockout-3.2.0.js"></script>
 		<script src="js/app.js"></script>
 		<script
