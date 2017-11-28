@@ -53,6 +53,7 @@ ul{
 }  
 #filterMenu li {
   padding: 1em .5em;
+  list-style: none;
 }
 #filterMenu h2,
 h3 {

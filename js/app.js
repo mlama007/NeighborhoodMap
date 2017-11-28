@@ -121,6 +121,15 @@ function myClick(id){
 	google.maps.event.trigger(markers[id], 'click');
 }
 
+//uncheck filter, hide marker
+function myCheck(id){
+	if (markers[id].position = markers[id].position){
+		markers[id].position = 0;
+	} else {
+		markers[id].position = locations[id].location
+	}
+}
+
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
 // one infowindow which will open at the marker that is clicked, and populate based
