@@ -19,16 +19,23 @@
 		<!-- FILTER MENU -->
 		<div id="filterMenu">		
 			<h2>Locations</h2>
+			<ul>
+				<li id="1" onclick="myClick(0);">Bora-Bora Pearl Beach Resort & Spa</li>
+				<li id="2" onclick="myClick(1);">Conrad Bora Bora Nui</li>
+				<li id="3" onclick="myClick(2);">Bora Bora Lagoonarium</li>
+				<li id="4" onclick="myClick(3);">Plage Matira</li>
+				<li id="5" onclick="myClick(4);">Four Seasons Resort Bora Bora</li>
+			</ul>
+
+			<h3>Find Out More</h3>
 			<ul data-bind="foreach: location">
-				<select id="selectedLocation" data-bind="optionsCaption: 'Choose..', options: $root.locations, optionsText: 'title'"></select>
-				
+				<select id="selectedLocation" data-bind="optionsCaption: 'Choose..', options: $root.locations, optionsText: 'title'"></select>				
 				<!-- Wikipedia -->
 				<div id="wikiInfo">
 					<form action="" method="GET" class="form-inline">
 						<input style="display: none" name="url" type="text" class="url span6" value="https://en.wikipedia.org/wiki/Bora_Bora">
 						<button>Go »</button>
 					</form>
-
 					<div class="results">		
 						<div class="summary well">
 							<img src="" class="thumbnail">

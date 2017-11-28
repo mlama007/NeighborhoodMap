@@ -54,3 +54,7 @@ ul{
 #filterMenu li {
   padding: 1em .5em;
 }
+#filterMenu h2,
+h3 {
+  color: rgb(48, 76, 168);
+}

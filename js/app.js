@@ -116,6 +116,11 @@ function initMap() {
 	}
 }
 
+// The function to trigger the marker click, 'id' is the reference index to the 'markers' array.
+function myClick(id){
+	google.maps.event.trigger(markers[id], 'click');
+}
+
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
 // one infowindow which will open at the marker that is clicked, and populate based
