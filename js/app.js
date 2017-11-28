@@ -1,23 +1,45 @@
-function openFilter(){
-	let mapElem = document.getElementById('map');		
-	let filterElem = document.getElementById('filterMenu');		
-	if (filterElem.style.display == "none") {
-		filterElem.style.display = "block";
-		mapElem.style.width = "70%";
-		mapElem.style.float = "right";
-		filterElem.style.float = "left";
-	} else {
-		filterElem.style.display = "none";
-		mapElem.style.width = "100%";
-		mapElem.style.float = "none";
-	}
-};
+
+let places = [
+	{title: 'National Museum of American History', location: {lat: 38.891296, lng: -77.029945}},
+	{title: 'Smithsonian National Museum of Natural History', location: {lat: 38.891296, lng: -77.026131}},
+	{title: 'Marian Koshland Science Museum', location: {lat: 38.896259, lng: -77.019745}},
+	{title: 'Smithsonian National Air and Space Museum', location: {lat: 38.887562, lng: -77.019844}},
+	{title: 'National Gallery of Art', location: {lat: 38.891327,lng:  -77.019974}},
+	{title: 'Smithsonian American Art Museum', location: {lat: 38.897846, lng: -77.023064}}
+];
+
+
+function MapModelView(){
+	let self = this;
+
+	//Operations
+	self.openFilter = function(){
+		let mapElem = document.getElementById('map');		
+		let filterElem = document.getElementById('filterMenu');		
+		if (filterElem.style.display == "none") {
+			filterElem.style.display = "block";
+			mapElem.style.width = "70%";
+			mapElem.style.float = "right";
+			filterElem.style.float = "left";
+		} else {
+			filterElem.style.display = "none";
+			mapElem.style.width = "100%";
+			mapElem.style.float = "none";
+		}
+	};
+}
+ko.applyBindings(new MapModelView());
+
+// The function to trigger the marker click, 'id' is the reference index to the 'markers' array.
+function myClick(id){
+	google.maps.event.trigger(markers[id], 'click');
+}
 
 //  MAP ------------------------------------------------------------------------------------------------------------------------
-var map;
+let map;
 
 // Create a new blank array for all the listing markers.
-var markers = [];
+let markers = [];
 
 function initMap() {
 	// Constructor creates a new map - only center and zoom are required.
@@ -29,32 +51,25 @@ function initMap() {
 
 	// These are the real estate listings that will be shown to the user.
 	// Normally we'd have these in a database instead.
-	var locations = [
-		{title: 'National Museum of American History', location: {lat: 38.891296, lng: -77.029945}},
-		{title: 'Smithsonian National Museum of Natural History', location: {lat: 38.891296, lng: -77.026131}},
-		{title: 'Marian Koshland Science Museum', location: {lat: 38.896259, lng: -77.019745}},
-		{title: 'Smithsonian National Air and Space Museum', location: {lat: 38.887562, lng: -77.019844}},
-		{title: 'National Gallery of Art', location: {lat: 38.891327,lng:  -77.019974}},
-		{title: 'Smithsonian American Art Museum', location: {lat: 38.897846, lng: -77.023064}}
-	];
+	let locations = places;
 
-	var largeInfowindow = new google.maps.InfoWindow();
-	var bounds = new google.maps.LatLngBounds();
+	let largeInfowindow = new google.maps.InfoWindow();
+	let bounds = new google.maps.LatLngBounds();
 
 	// Style the markers a bit. This will be our listing marker icon.
-	var defaultIcon = makeMarkerIcon('7161EF');
+	let defaultIcon = makeMarkerIcon('7161EF');
 	
 	// Create a "highlighted location" marker color for when the user
 	// mouses over the marker.
-	var highlightedIcon = makeMarkerIcon('68efad');
+	let highlightedIcon = makeMarkerIcon('68efad');
 
 	// The following group uses the location array to create an array of markers on initialize.
-	for (var i = 0; i < locations.length; i++) {
+	for (let i = 0; i < locations.length; i++) {
 		// Get the position from the location array.
-		var position = locations[i].location;
-		var title = locations[i].title;
+		let position = locations[i].location;
+		let title = locations[i].title;
 		// Create a marker per location, and put into markers array.
-		var marker = new google.maps.Marker({
+		let marker = new google.maps.Marker({
 			map: map,
 			position: position,
 			title: title,
@@ -96,23 +111,41 @@ function initMap() {
 	document.getElementById('hide-listings').addEventListener('click', hideListings);
 }
 
+function allVisible(){
+	classArt[0].style.visibility= "visible";
+	classArt[1].style.visibility= "visible";
+	classHistory[0].style.visibility= "visible";
+	classHistory[1].style.visibility= "visible";
+	classScience[0].style.visibility= "visible";
+	classScience[1].style.visibility= "visible";
+} 	
+function allInsible(){
+	classArt[0].style.visibility= "hidden";
+	classArt[1].style.visibility= "hidden";
+	classHistory[0].style.visibility= "hidden";
+	classHistory[1].style.visibility= "hidden";
+	classScience[0].style.visibility= "hidden";
+	classScience[1].style.visibility= "hidden";
+} 
 // This function will loop through the markers array and display them all.
 function showListings() {
-	var bounds = new google.maps.LatLngBounds();
+	let bounds = new google.maps.LatLngBounds();
 	// Extend the boundaries of the map for each marker and display the marker
-	for (var i = 0; i < markers.length; i++) {
+	for (let i = 0; i < markers.length; i++) {
 	  markers[i].setMap(map);
 	  bounds.extend(markers[i].position);
 	  markers[i].animation = google.maps.Animation.DROP;
 	}
 	map.fitBounds(bounds);
+	allVisible();
 }
 
 // This function will loop through the listings and hide them all.
 function hideListings() {
-	for (var i = 0; i < markers.length; i++) {
+	for (let i = 0; i < markers.length; i++) {
 		markers[i].setMap(null);
 	}
+	allInsible();
 }
 
 //Drop down menu hides / shows markers
@@ -131,40 +164,59 @@ function selectFunction() {
 	} 
 }
 
+let classArt = document.getElementsByClassName("Art")
+let classHistory = document.getElementsByClassName("History");
+let classScience = document.getElementsByClassName("Science");
+
 //show Art Markers
 function showListingsArt() {
-	var bounds = new google.maps.LatLngBounds();
+	allVisible();
+	let bounds = new google.maps.LatLngBounds();
 	// Extend the boundaries of the map for each marker and display the marker
-	for (var i = 4; i < markers.length; i++) {
+	for (let i = 4; i < markers.length; i++) {
 	  markers[i].setMap(map);
 	  bounds.extend(markers[i].position);
 	  markers[i].animation = google.maps.Animation.DROP;
 	}
 	map.fitBounds(bounds);
+	classHistory[0].style.visibility= "hidden";
+	classHistory[1].style.visibility= "hidden";	
+	classScience[0].style.visibility= "hidden";		
+	classScience[1].style.visibility= "hidden";	
 }
 
 //show History Markers
 function showListingsHistory() {
-	var bounds = new google.maps.LatLngBounds();
+	allVisible();
+	let bounds = new google.maps.LatLngBounds();
 	// Extend the boundaries of the map for each marker and display the marker
-	for (var i = 0; i < 2 ; i++) {
+	for (let i = 0; i < 2 ; i++) {
 	  markers[i].setMap(map);
 	  bounds.extend(markers[i].position);
 	  markers[i].animation = google.maps.Animation.DROP;
 	}
 	map.fitBounds(bounds);
+	classArt[0].style.visibility= "hidden";
+	classArt[1].style.visibility= "hidden";
+	classScience[0].style.visibility= "hidden";		
+	classScience[1].style.visibility= "hidden";
 }
 
 //show Science Markers
 function showListingsScience() {
-	var bounds = new google.maps.LatLngBounds();
+	allVisible();
+	let bounds = new google.maps.LatLngBounds();
 	// Extend the boundaries of the map for each marker and display the marker
-	for (var i = 2; i < 4; i++) {
+	for (let i = 2; i < 4; i++) {
 	  markers[i].setMap(map);
 	  bounds.extend(markers[i].position);
 	  markers[i].animation = google.maps.Animation.DROP;
 	}
 	map.fitBounds(bounds);
+	classArt[0].style.visibility= "hidden";
+	classArt[1].style.visibility= "hidden";
+	classHistory[0].style.visibility= "hidden";		
+	classHistory[1].style.visibility= "hidden";
 }
 
 
@@ -186,7 +238,7 @@ function populateInfoWindow(marker, infowindow) {
 }
 
 function makeMarkerIcon(markerColor) {
-	var markerImage = new google.maps.MarkerImage(
+	let markerImage = new google.maps.MarkerImage(
 	  'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
 	  '|40|_|%E2%80%A2',
 	  new google.maps.Size(21, 34),

@@ -56,3 +56,7 @@ body {
 #allListings {
   padding: 1em;
 }  
+
+#listingsList li{
+  padding: .8em 0;
+}
