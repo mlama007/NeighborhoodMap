@@ -46,16 +46,13 @@ body {
   padding-left: 1.5em;
   width: 20%;
 }
-#filterMenu h2,
-ul{
+#filterMenu h2 {
   margin: 0;
-  padding: .5em;
-}  
-#filterMenu li {
-  padding: 1em .5em;
-  list-style: none;
-}
-#filterMenu h2,
-h3 {
   color: rgb(48, 76, 168);
-}
+}  
+#dropdownListings {
+  padding: 1em;
+}  
+#allListings {
+  padding: 1em;
+}  

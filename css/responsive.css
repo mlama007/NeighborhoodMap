@@ -1,14 +1,12 @@
 @media screen and (max-width: 450px) {
     #hamburgerMenu {
     display: none;
-    }
-    
+    }    
     .header{
         text-align: center;
         padding-bottom: 0;
     }
     .header h1 {
-        color: rgb(37, 105, 194);
         font-size: 2em;
         margin: 0;
         
@@ -23,17 +21,19 @@
         position: relative;
         text-align: center; 
         display: inline;
+        padding-bottom: 1em;
     }
-    #filterMenu h2{
+    #dropdownListings {
         padding: 0;
-        
-    }
+      }  
+      #allListings {
+        padding: 0;
+      } 
 
     #map {
         margin: 0;
         height: 100%;
         width: 100%;
-    }
-    
+    }    
     
 }

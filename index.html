@@ -13,45 +13,27 @@
 
 		<!-- HEADER -->
 		<div class="header">
-			<h1> <span id="hamburgerMenu" data-bind="click: openFilter" >&#9776;</span><span id="title">My Dream Vacation</span></h1>			
+			<h1> <span id="hamburgerMenu" onclick="openFilter()" >&#9776;</span><span id="title">Interesting Places</span></h1>			
 		</div>
 
 		<!-- FILTER MENU -->
 		<div id="filterMenu">		
-			<h2>Locations</h2>
-			<ul>
-				<li id="1" onclick="myClick(0);"> <a onclick="myCheck(0)"><input type="checkbox" id="checkbox_btn" checked/></a> Bora-Bora Pearl Beach Resort & Spa</li>
-				<li id="2" onclick="myClick(1);"> <a onclick="myCheck(1)"><input type="checkbox" id="checkbox_btn" checked/></a> Conrad Bora Bora Nui</li>
-				<li id="3" onclick="myClick(2);"> <a onclick="myCheck(2)"><input type="checkbox" id="checkbox_btn" checked/></a> Bora Bora Lagoonarium</li>
-				<li id="4" onclick="myClick(3);"> <a onclick="myCheck(3)"><input type="checkbox" id="checkbox_btn" checked/></a> Plage Matira</li>
-				<li id="5" onclick="myClick(4);"> <a onclick="myCheck(4)"><input type="checkbox" id="checkbox_btn" checked/></a> Four Seasons Resort Bora Bora</li>
-			</ul>
-
-			<h3>Find Out More</h3>
-			<ul data-bind="foreach: location">
-				<select id="selectedLocation" data-bind="optionsCaption: 'Choose..', options: $root.locations, optionsText: 'title'"></select>				
-				<!-- Wikipedia -->
-				<div id="wikiInfo">
-					<form action="" method="GET" class="form-inline">
-						<input style="display: none" name="url" type="text" class="url span6" value="https://en.wikipedia.org/wiki/Bora_Bora">
-						<button>Go »</button>
-					</form>
-					<div class="results">		
-						<div class="summary well">
-							<img src="" class="thumbnail">
-							<h4><span class="title"> </span></h4>
-							<p>
-								<span class="type"></span>
-								<br><span class="place"></span>
-								<br><span class="start"></span> — <span class="end"></span>
-							</p>
-							<p class="summary"></p>
-							<div class="clear"></div>
-						</div>		
-					</div>
-				</div>
-				
-			</ul>
+			<div id="dropdownListings">
+				<h2>Locations</h2>
+				<p>
+					<select name="" id="selection">
+						<option value="Science">Science</option>
+						<option value="Art">Art</option>
+						<option value="History">History</option>
+					</select>				
+					<button type="button" onclick="selectFunction()">Filter</button>
+				</p>
+			</div>
+			
+			<div id="allListings">
+				<input id="show-listings" type="button" value="Show All Listings">
+				<input id="hide-listings" type="button" value="Hide All Listings">
+			</div>
 		</div>
 			
 		<!-- MAP -->
