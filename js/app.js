@@ -445,9 +445,11 @@ var urlParams = {},
 if (q && q.length && q[0] === '?') {
 	q = q.slice(1);
 }
-while (e = r.exec(q)) {
+e = r.exec(q)
+while (e) {
 	// TODO: have values be array as query string allow repetition of keys
 	urlParams[d(e[1])] = d(e[2]);
+	e = r.exec(q);
 }
 return urlParams;
 };
