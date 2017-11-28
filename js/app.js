@@ -391,23 +391,23 @@ if (q.url) {
 	var summaryInfo = info.summary;
 	var properties = rawData[info.dbpediaUrl];
 
-	for (key in summaryInfo) {
+	for (var key in summaryInfo) {
 		$('.summary .' + key).text(summaryInfo[key]);
 	}
 	$('.summary .thumbnail').attr('src', summaryInfo.image);
-	var dataAsJson = JSON.stringify(summaryInfo, null, '    ')
+	var dataAsJson = JSON.stringify(summaryInfo, null, '    ');
 	$('.summary .raw').val(dataAsJson);
 
 	// Raw Data Summary
 	var count = 0;
-	for (key in properties) {
+	for (var key in properties) {
 		count += 1;
 		$('.data-summary .properties').append(key + '\n');
 	}
 	$('.data-summary .count').text(count);
 
 	// raw JSON
-	var dataAsJson = JSON.stringify(rawData, null, '    ')
+	dataAsJson = JSON.stringify(rawData, null, '    ');
 	$('.results-json').val(dataAsJson);
 
 	$('html,body').animate({
