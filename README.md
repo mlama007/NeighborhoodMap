@@ -12,6 +12,6 @@ You can also filter through the locations.
 * CLick on the hamburger button to filter these locations
 
 ##### Future Modifications
-* 
+* add Yelp API
 * 
 * 
