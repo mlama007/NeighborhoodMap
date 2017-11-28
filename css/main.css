@@ -60,3 +60,12 @@ body {
 #listingsList li{
   padding: .8em 0;
 }
+
+.windowPic{
+  text-align: center;
+  max-width: 10em;
+  max-height: 10em;
+}
+.window {
+  text-align: center;
+}

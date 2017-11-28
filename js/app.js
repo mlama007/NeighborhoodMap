@@ -224,11 +224,39 @@ function showListingsScience() {
 // one infowindow which will open at the marker that is clicked, and populate based
 // on that markers position.
 function populateInfoWindow(marker, infowindow) {
+	let self =this;
+	self.pictureURL = "";
+
 	// Check to make sure the infowindow is not already opened on this marker.
 	if (infowindow.marker != marker) {
 		infowindow.marker = marker;
-		infowindow.setContent('<div>' + marker.title + '</div>');
 		//add some 3rd party info
+//--------------------------		
+		//gets json data for img
+		let flickrURL = 'https://api.flickr.com/services/rest/?method=flickr.photos.search' +
+			'&api_key=4b20279d76aa23a64ef1b06509d01e09&text=' + marker.title.replace(' ', '+') +
+			'&license=1%2C2%2C3%2C4%2C5%2C6%2C7&content_type=1&lat=' + marker.position.lat() +
+			'&lon=' + marker.position.lng() + '&radius=1&radius_units=km&per_page=15&page=1' +
+			'&format=json&nojsoncallback=1';
+
+		$.getJSON(flickrURL)
+		.done(function(data) {
+			getPicture(data);
+		})
+		.fail(function(jqxhr, textStatus, error) {
+		alert("Flickr unable to load");
+		});
+		
+		function getPicture(data){
+			let myPicture = data.photos.photo[0];
+			
+			self.pictureURL = 'https://farm' + myPicture.farm + '.staticflickr.com/'
+			+ myPicture.server + '/' + myPicture.id + '_' + myPicture.secret + '.jpg';
+			infowindow.setContent('<div class="window"> <p>' + marker.title + '</p><img class="windowPic" src="'+self.pictureURL+'"></img> </div>');
+		}		
+
+//--------------------------
+
 		infowindow.open(map, marker);
 		// Make sure the marker property is cleared if the infowindow is closed.
 		infowindow.addListener('closeclick',function(){
