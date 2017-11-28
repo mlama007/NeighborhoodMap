@@ -278,7 +278,7 @@ my._lookupProperty = function(dict, property) {
 	var values = dict[property];
 	for (var idx in values) {
 	// only take english values if lang is present
-	if (!values[idx]['lang'] || values[idx].lang == 'en') {
+	if (!values[idx].lang || values[idx].lang == 'en') {
 		return values[idx].value;
 	}
 	}
@@ -400,7 +400,7 @@ if (q.url) {
 
 	// Raw Data Summary
 	var count = 0;
-	for (var key in properties) {
+	for (key in properties) {
 		count += 1;
 		$('.data-summary .properties').append(key + '\n');
 	}
@@ -447,6 +447,8 @@ if (q && q.length && q[0] === '?') {
 }
 while (e = r.exec(q)) {
 	// TODO: have values be array as query string allow repetition of keys
+	let a = 0;
+	a =+ 1;
 	urlParams[d(e[1])] = d(e[2]);
 }
 return urlParams;
