@@ -375,7 +375,7 @@ return my;
   
   
 
-  //  Get Info from Wikipedia ------------------------------------------------------------------------------------------------
+//  Get Info from Wikipedia ------------------------------------------------------------------------------------------------
 jQuery(function() {
 var q = parseQueryString(window.location.search);
 if (q.url) {
@@ -445,10 +445,9 @@ var urlParams = {},
 if (q && q.length && q[0] === '?') {
 	q = q.slice(1);
 }
-while (e = r.exec(q)) {
+if (e = r.exec(q)) {
 	// TODO: have values be array as query string allow repetition of keys
-	let a = 0;
-	a =+ 1;
+
 	urlParams[d(e[1])] = d(e[2]);
 }
 return urlParams;
