@@ -1,28 +1,31 @@
 @media screen and (max-width: 450px) {
     #hamburgerMenu {
-    display: none;
+
     }    
     .header{
         text-align: center;
         padding-bottom: 0;
     }
     .header h1 {
-        font-size: 2em;
-        margin: 0;
-        
+        font-size: 1em;
+        margin: 0; 
     }
-    #title{
-        float: none;
-        margin-right: 0;
-        padding: 0;
+    #filterMenu h2 {
+        font-size: 1.2em;
+        padding-top: .2em;
     }
-
+    #filterMenu p {
+        margin-top: 0.4em; 
+    }
     #filterMenu{
         position: relative;
         text-align: center; 
         display: inline;
         padding-bottom: 1em;
     }
+    #listingsList li{
+        padding: .2em 0;
+      }
     #dropdownListings {
         padding: 0;
       }  
@@ -35,8 +38,5 @@
         height: 100%;
         width: 100%;
     }    
-    #listingsList{
-        display: none;
-    }
     
 }
