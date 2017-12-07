@@ -1,4 +1,4 @@
-
+//Any data changes must be handled by knockout.------------------------------------------------------------------------------------------------/////////////
 let places = [
 	{title: 'National Museum of American History', location: {lat: 38.891296, lng: -77.029945}},
 	{title: 'Smithsonian National Museum of Natural History', location: {lat: 38.891296, lng: -77.026131}},
@@ -35,81 +35,8 @@ function myClick(id){
 	google.maps.event.trigger(markers[id], 'click');
 }
 
-//  MAP ------------------------------------------------------------------------------------------------------------------------
-let map;
 
-// Create a new blank array for all the listing markers.
-let markers = [];
-
-function initMap() {
-	// Constructor creates a new map - only center and zoom are required.
-	map = new google.maps.Map(document.getElementById('map'), {
-	  center: {lat: 40.7413549, lng: -73.9980244},
-	  zoom: 13,
-	  mapTypeControl: false
-	});
-
-	// These are the real estate listings that will be shown to the user.
-	// Normally we'd have these in a database instead.
-	let locations = places;
-
-	let largeInfowindow = new google.maps.InfoWindow();
-	let bounds = new google.maps.LatLngBounds();
-
-	// Style the markers a bit. This will be our listing marker icon.
-	let defaultIcon = makeMarkerIcon('7161EF');
-	
-	// Create a "highlighted location" marker color for when the user
-	// mouses over the marker.
-	let highlightedIcon = makeMarkerIcon('68efad');
-
-	// The following group uses the location array to create an array of markers on initialize.
-	for (let i = 0; i < locations.length; i++) {
-		// Get the position from the location array.
-		let position = locations[i].location;
-		let title = locations[i].title;
-		// Create a marker per location, and put into markers array.
-		let marker = new google.maps.Marker({
-			map: map,
-			position: position,
-			title: title,
-			icon:  defaultIcon,
-			animation: google.maps.Animation.DROP,
-			id: i
-		});
-		// Push the marker to our array of markers.
-		markers.push(marker);
-
-		bounds.extend(markers[i].position);
-
-		// Two event listeners - one for mouseover, one for mouseout,
-		// to change the colors back and forth.
-		marker.addListener('mouseover', mouseover);
-		marker.addListener('mouseout', mouseout);
-
-		// Create an onclick event to open an infowindow at each marker.
-		marker.addListener('click', clicked);
-	}
-	// Extend the boundaries of the map for each marker
-	map.fitBounds(bounds);
-	
-	function mouseover() {
-		this.setIcon(highlightedIcon);
-	}
-	function mouseout() {
-		this.setIcon(defaultIcon);
-	}
-
-	function clicked() {
-		let self = this;
-		self.setAnimation(google.maps.Animation.BOUNCE);
-		setTimeout(function(){ self.setAnimation(null); }, 750);
-		populateInfoWindow(this, largeInfowindow);
-	}
-
-	document.getElementById('show-listings').addEventListener('click', showListings);
-	document.getElementById('hide-listings').addEventListener('click', hideListings);
-}
+//The filter must be handled by knockout.------------------------------------------------------------------------------------------------/////////////
 
 function allVisible(){
 	classArt[0].style.visibility= "visible";
@@ -219,6 +146,81 @@ function showListingsScience() {
 	classHistory[1].style.visibility= "hidden";
 }
 
+//  MAP ------------------------------------------------------------------------------------------------------------------------
+let map;
+
+// Create a new blank array for all the listing markers.
+let markers = [];
+
+function initMap() {
+	// Constructor creates a new map - only center and zoom are required.
+	map = new google.maps.Map(document.getElementById('map'), {
+	  center: {lat: 40.7413549, lng: -73.9980244},
+	  zoom: 13,
+	  mapTypeControl: false
+	});
+
+	// These are the real estate listings that will be shown to the user.
+	// Normally we'd have these in a database instead.
+	let locations = places;
+
+	let largeInfowindow = new google.maps.InfoWindow();
+	let bounds = new google.maps.LatLngBounds();
+
+	// Style the markers a bit. This will be our listing marker icon.
+	let defaultIcon = makeMarkerIcon('7161EF');
+	
+	// Create a "highlighted location" marker color for when the user
+	// mouses over the marker.
+	let highlightedIcon = makeMarkerIcon('68efad');
+
+	// The following group uses the location array to create an array of markers on initialize.
+	for (let i = 0; i < locations.length; i++) {
+		// Get the position from the location array.
+		let position = locations[i].location;
+		let title = locations[i].title;
+		// Create a marker per location, and put into markers array.
+		let marker = new google.maps.Marker({
+			map: map,
+			position: position,
+			title: title,
+			icon:  defaultIcon,
+			animation: google.maps.Animation.DROP,
+			id: i
+		});
+		// Push the marker to our array of markers.
+		markers.push(marker);
+
+		bounds.extend(markers[i].position);
+
+		// Two event listeners - one for mouseover, one for mouseout,
+		// to change the colors back and forth.
+		marker.addListener('mouseover', mouseover);
+		marker.addListener('mouseout', mouseout);
+
+		// Create an onclick event to open an infowindow at each marker.
+		marker.addListener('click', clicked);
+	}
+	// Extend the boundaries of the map for each marker
+	map.fitBounds(bounds);
+	
+	function mouseover() {
+		this.setIcon(highlightedIcon);
+	}
+	function mouseout() {
+		this.setIcon(defaultIcon);
+	}
+
+	function clicked() {
+		let self = this;
+		self.setAnimation(google.maps.Animation.BOUNCE);
+		setTimeout(function(){ self.setAnimation(null); }, 750);
+		populateInfoWindow(this, largeInfowindow);
+	}
+
+	document.getElementById('show-listings').addEventListener('click', showListings);
+	document.getElementById('hide-listings').addEventListener('click', hideListings);
+}
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
 // one infowindow which will open at the marker that is clicked, and populate based
