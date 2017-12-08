@@ -39,7 +39,7 @@
 						<li class="Art" onclick="myClick(5);"> Smithsonian American Art Museum</li>
 					</ul>
 					<h1>WITH KNOCKOUT</h1>
-					<ul data-bind="foreach: locals">
+					<ul data-bind="foreach: locals, visible: showMe">
 						<li data-bind="text: $data.title, click: $root.whenClicked.bind($data, $index())"></li>
 					</ul>
 
@@ -51,8 +51,8 @@
 				<input id="hide-listings" type="button" value="Hide All Listings">
 			</div> -->
 			<div id="allListings">
-				<input id="show-listings" type="button" value="Show All Listings">
-				<input id="hide-listings" type="button" value="Hide All Listings">
+				<input id="show-listings" data-bind="click: showListings" type="button" value="Show All Listings">
+				<input id="hide-listings" data-bind="click: hideListings" type="button" value="Hide All Listings">
 			</div>
 		</div>
 			

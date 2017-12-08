@@ -10,6 +10,8 @@ function MapModelView(){
 		{title: 'Smithsonian American Art Museum', type: "Art", id: '5'},
 	];
 
+	self.showMe = ko.observable(true);
+
 	//Operations
 	self.openFilter = function(){
 		let mapElem = document.getElementById('map');		
@@ -27,38 +29,26 @@ function MapModelView(){
 	};
 
 	self.whenClicked = function(locals, index){
-		ifClick(index.id);		
+		ifClick(index.id);
+	}
+
+	self.showListings =function(){
+		showListings();
+	}
+	
+	self.hideListings =function(){
+		hideListings();		
 	}
 }
-ko.applyBindings(new MapModelView());
+let vm = new MapModelView();
+ko.applyBindings(vm);
+
 
 // The function to trigger the marker click, 'id' is the reference index to the 'markers' array.
 function ifClick(id){
 	google.maps.event.trigger(markers[id], 'click');		
 }
 
-function myClick(id){
-	google.maps.event.trigger(markers[id], 'click');
-}
-
-//The filter must be handled by knockout.------------------------------------------------------------------------------------------------/////////////
-
-function allVisible(){
-	classArt[0].style.visibility= "visible";
-	classArt[1].style.visibility= "visible";
-	classHistory[0].style.visibility= "visible";
-	classHistory[1].style.visibility= "visible";
-	classScience[0].style.visibility= "visible";
-	classScience[1].style.visibility= "visible";
-} 	
-function allInsible(){
-	classArt[0].style.visibility= "hidden";
-	classArt[1].style.visibility= "hidden";
-	classHistory[0].style.visibility= "hidden";
-	classHistory[1].style.visibility= "hidden";
-	classScience[0].style.visibility= "hidden";
-	classScience[1].style.visibility= "hidden";
-} 
 // This function will loop through the markers array and display them all.
 function showListings() {
 	let bounds = new google.maps.LatLngBounds();
@@ -69,7 +59,7 @@ function showListings() {
 	  markers[i].animation = google.maps.Animation.DROP;
 	}
 	map.fitBounds(bounds);
-	allVisible();
+	vm.showMe(true);
 }
 
 // This function will loop through the listings and hide them all.
@@ -77,80 +67,141 @@ function hideListings() {
 	for (let i = 0; i < markers.length; i++) {
 		markers[i].setMap(null);
 	}
-	allInsible();
+	vm.showMe(false);
 }
 
-//Drop down menu hides / shows markers
-function selectFunction() {
-	let selected = document.getElementById("selection").selectedIndex;
-	let value = document.getElementsByTagName("option")[selected].value
-	if (value === "Art"){
-		hideListings();
-		showListingsArt();
-	} if (value === "History"){
-		hideListings();
-		showListingsHistory();
-	} if (value === "Science"){
-		hideListings();
-		showListingsScience();
-	} 
+
+
+
+
+//The filter must be handled by knockout.------------------------------------------------------------------------------------------------/////////////
+
+//OLDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD until //MAP
+//OLDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD until //MAP
+//OLDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD until //MAP
+//OLDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD until //MAP
+//OLDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD until //MAP
+//OLDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD until //MAP
+function myClick(id){
+	google.maps.event.trigger(markers[id], 'click');
 }
 
-let classArt = document.getElementsByClassName("Art")
-let classHistory = document.getElementsByClassName("History");
-let classScience = document.getElementsByClassName("Science");
+//The filter must be handled by knockout.------------------------------------------------------------------------------------------------/////////////
 
-//show Art Markers
-function showListingsArt() {
-	allVisible();
-	let bounds = new google.maps.LatLngBounds();
-	// Extend the boundaries of the map for each marker and display the marker
-	for (let i = 4; i < markers.length; i++) {
-	  markers[i].setMap(map);
-	  bounds.extend(markers[i].position);
-	  markers[i].animation = google.maps.Animation.DROP;
-	}
-	map.fitBounds(bounds);
-	classHistory[0].style.visibility= "hidden";
-	classHistory[1].style.visibility= "hidden";	
-	classScience[0].style.visibility= "hidden";		
-	classScience[1].style.visibility= "hidden";	
-}
+// function allVisible(){
+// 	classArt[0].style.visibility= "visible";
+// 	classArt[1].style.visibility= "visible";
+// 	classHistory[0].style.visibility= "visible";
+// 	classHistory[1].style.visibility= "visible";
+// 	classScience[0].style.visibility= "visible";
+// 	classScience[1].style.visibility= "visible";
+// } 	
+// function allInsible(){
+// 	classArt[0].style.visibility= "hidden";
+// 	classArt[1].style.visibility= "hidden";
+// 	classHistory[0].style.visibility= "hidden";
+// 	classHistory[1].style.visibility= "hidden";
+// 	classScience[0].style.visibility= "hidden";
+// 	classScience[1].style.visibility= "hidden";
+// } 
+// // This function will loop through the markers array and display them all.
+// function showListings() {
+// 	let bounds = new google.maps.LatLngBounds();
+// 	// Extend the boundaries of the map for each marker and display the marker
+// 	for (let i = 0; i < markers.length; i++) {
+// 	  markers[i].setMap(map);
+// 	  bounds.extend(markers[i].position);
+// 	  markers[i].animation = google.maps.Animation.DROP;
+// 	}
+// 	map.fitBounds(bounds);
+// 	allVisible();
+// }
 
-//show History Markers
-function showListingsHistory() {
-	allVisible();
-	let bounds = new google.maps.LatLngBounds();
-	// Extend the boundaries of the map for each marker and display the marker
-	for (let i = 0; i < 2 ; i++) {
-	  markers[i].setMap(map);
-	  bounds.extend(markers[i].position);
-	  markers[i].animation = google.maps.Animation.DROP;
-	}
-	map.fitBounds(bounds);
-	classArt[0].style.visibility= "hidden";
-	classArt[1].style.visibility= "hidden";
-	classScience[0].style.visibility= "hidden";		
-	classScience[1].style.visibility= "hidden";
-}
+// // This function will loop through the listings and hide them all.
+// function hideListings() {
+// 	for (let i = 0; i < markers.length; i++) {
+// 		markers[i].setMap(null);
+// 	}
+// 	allInsible();
+// }
 
-//show Science Markers
-function showListingsScience() {
-	allVisible();
-	let bounds = new google.maps.LatLngBounds();
-	// Extend the boundaries of the map for each marker and display the marker
-	for (let i = 2; i < 4; i++) {
-	  markers[i].setMap(map);
-	  bounds.extend(markers[i].position);
-	  markers[i].animation = google.maps.Animation.DROP;
-	}
-	map.fitBounds(bounds);
-	classArt[0].style.visibility= "hidden";
-	classArt[1].style.visibility= "hidden";
-	classHistory[0].style.visibility= "hidden";		
-	classHistory[1].style.visibility= "hidden";
-}
+// //Drop down menu hides / shows markers
+// function selectFunction() {
+// 	let selected = document.getElementById("selection").selectedIndex;
+// 	let value = document.getElementsByTagName("option")[selected].value
+// 	if (value === "Art"){
+// 		hideListings();
+// 		showListingsArt();
+// 	} if (value === "History"){
+// 		hideListings();
+// 		showListingsHistory();
+// 	} if (value === "Science"){
+// 		hideListings();
+// 		showListingsScience();
+// 	} 
+// }
 
+// let classArt = document.getElementsByClassName("Art")
+// let classHistory = document.getElementsByClassName("History");
+// let classScience = document.getElementsByClassName("Science");
+
+// //show Art Markers
+// function showListingsArt() {
+// 	allVisible();
+// 	let bounds = new google.maps.LatLngBounds();
+// 	// Extend the boundaries of the map for each marker and display the marker
+// 	for (let i = 4; i < markers.length; i++) {
+// 	  markers[i].setMap(map);
+// 	  bounds.extend(markers[i].position);
+// 	  markers[i].animation = google.maps.Animation.DROP;
+// 	}
+// 	map.fitBounds(bounds);
+// 	classHistory[0].style.visibility= "hidden";
+// 	classHistory[1].style.visibility= "hidden";	
+// 	classScience[0].style.visibility= "hidden";		
+// 	classScience[1].style.visibility= "hidden";	
+// }
+
+// //show History Markers
+// function showListingsHistory() {
+// 	allVisible();
+// 	let bounds = new google.maps.LatLngBounds();
+// 	// Extend the boundaries of the map for each marker and display the marker
+// 	for (let i = 0; i < 2 ; i++) {
+// 	  markers[i].setMap(map);
+// 	  bounds.extend(markers[i].position);
+// 	  markers[i].animation = google.maps.Animation.DROP;
+// 	}
+// 	map.fitBounds(bounds);
+// 	classArt[0].style.visibility= "hidden";
+// 	classArt[1].style.visibility= "hidden";
+// 	classScience[0].style.visibility= "hidden";		
+// 	classScience[1].style.visibility= "hidden";
+// }
+
+// //show Science Markers
+// function showListingsScience() {
+// 	allVisible();
+// 	let bounds = new google.maps.LatLngBounds();
+// 	// Extend the boundaries of the map for each marker and display the marker
+// 	for (let i = 2; i < 4; i++) {
+// 	  markers[i].setMap(map);
+// 	  bounds.extend(markers[i].position);
+// 	  markers[i].animation = google.maps.Animation.DROP;
+// 	}
+// 	map.fitBounds(bounds);
+// 	classArt[0].style.visibility= "hidden";
+// 	classArt[1].style.visibility= "hidden";
+// 	classHistory[0].style.visibility= "hidden";		
+// 	classHistory[1].style.visibility= "hidden";
+// }
+
+//  MAP ------------------------------------------------------------------------------------------------------------------------
+//  MAP ------------------------------------------------------------------------------------------------------------------------
+//  MAP ------------------------------------------------------------------------------------------------------------------------
+//  MAP ------------------------------------------------------------------------------------------------------------------------
+//  MAP ------------------------------------------------------------------------------------------------------------------------
+//  MAP ------------------------------------------------------------------------------------------------------------------------
 //  MAP ------------------------------------------------------------------------------------------------------------------------
 let map;
 let places = [
@@ -228,8 +279,8 @@ function initMap() {
 		populateInfoWindow(this, largeInfowindow);
 	}
 
-	document.getElementById('show-listings').addEventListener('click', showListings);
-	document.getElementById('hide-listings').addEventListener('click', hideListings);
+	// document.getElementById('show-listings').addEventListener('click', showListings);
+	// document.getElementById('hide-listings').addEventListener('click', hideListings);
 }
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
