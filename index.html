@@ -19,37 +19,19 @@
 		<!-- FILTER MENU -->
 		<div id="filterMenu">		
 			<div id="dropdownListings">
-				<h2>Locations</h2>
+				<h2>Locations</h2>		
 				<p>
-					<select name="" id="selection">
-						<option value="Science">Science</option>
-						<option value="Art">Art</option>
-						<option value="History">History</option>
-					</select>				
-					<button type="button" onclick="selectFunction()">Filter</button>
+					<select id="selection" data-bind="options: $data.locals, optionsText: 'type'"></select>				
+					<button type="button" data-bind= "click: selectFunction()">Filter</button>
 				</p>
-				<div id="listingsList">
-					<ul>
-						<!-- Displaying the locations on the list must be handled by knockout. -->
-						<li class="History" onclick="myClick(0);"> National Museum of American History</li>
-						<li class="History" onclick="myClick(1);"> Smithsonian National Museum of Natural History</li>
-						<li class="Science" onclick="myClick(2);"> Marian Koshland Science Museum</li>
-						<li class="Science" onclick="myClick(3);"> Smithsonian National Air and Space Museum</li>
-						<li class="Art" onclick="myClick(4);"> National Gallery of Art</li>
-						<li class="Art" onclick="myClick(5);"> Smithsonian American Art Museum</li>
-					</ul>
-					<h1>WITH KNOCKOUT</h1>
-					<ul data-bind="foreach: locals, visible: showMe">
-						<li data-bind="text: $data.title, click: $root.whenClicked.bind($data, $index())"></li>
-					</ul>
 
+				<div id="listingsList">
+					<ul data-bind="foreach: locals, visible: showMe">
+						<li class="listedLocations" data-bind="text: $data.title, click: $root.whenClicked.bind($data, $index())"></li>
+					</ul>
 				</div>
 			</div>
-			
-			<!-- <div id="allListings">
-				<input id="show-listings" type="button" value="Show All Listings">
-				<input id="hide-listings" type="button" value="Hide All Listings">
-			</div> -->
+
 			<div id="allListings">
 				<input id="show-listings" data-bind="click: showListings" type="button" value="Show All Listings">
 				<input id="hide-listings" data-bind="click: hideListings" type="button" value="Hide All Listings">
