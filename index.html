@@ -10,7 +10,7 @@
 		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>		
 	</head>
 	<body>
-
+		
 		<!-- HEADER -->
 		<div class="header">
 			<h1> <span id="hamburgerMenu" data-bind="click: openFilter" >&#9776;</span><span id="title">Interesting Places</span></h1>			
@@ -19,7 +19,7 @@
 		<!-- FILTER MENU -->
 		<div id="filterMenu">		
 			<div id="dropdownListings">
-				<h2>Locations</h2>
+				<h2 data-bind = "click: whenClicked" >Locations</h2>
 				<p>
 					<select name="" id="selection">
 						<option value="Science">Science</option>
@@ -38,9 +38,18 @@
 						<li class="Art" onclick="myClick(4);"> National Gallery of Art</li>
 						<li class="Art" onclick="myClick(5);"> Smithsonian American Art Museum</li>
 					</ul>
+
+					<ul data-bind="foreach: locals">
+						<li data-bind="text: $data.title, click: $root.whenClicked"></li>
+					</ul>
+
 				</div>
 			</div>
 			
+			<!-- <div id="allListings">
+				<input id="show-listings" type="button" value="Show All Listings">
+				<input id="hide-listings" type="button" value="Hide All Listings">
+			</div> -->
 			<div id="allListings">
 				<input id="show-listings" type="button" value="Show All Listings">
 				<input id="hide-listings" type="button" value="Hide All Listings">

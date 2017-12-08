@@ -1,16 +1,14 @@
 //Any data changes must be handled by knockout.------------------------------------------------------------------------------------------------/////////////
-let places = [
-	{title: 'National Museum of American History', location: {lat: 38.891296, lng: -77.029945}},
-	{title: 'Smithsonian National Museum of Natural History', location: {lat: 38.891296, lng: -77.026131}},
-	{title: 'Marian Koshland Science Museum', location: {lat: 38.896259, lng: -77.019745}},
-	{title: 'Smithsonian National Air and Space Museum', location: {lat: 38.887562, lng: -77.019844}},
-	{title: 'National Gallery of Art', location: {lat: 38.891327,lng:  -77.019974}},
-	{title: 'Smithsonian American Art Museum', location: {lat: 38.897846, lng: -77.023064}}
-];
-
-
 function MapModelView(){
 	let self = this;
+	self.locals = [
+		{title: 'National Museum of American History', type: "History"},
+		{title: 'Smithsonian National Museum of Natural History', type: "History"},
+		{title: 'Marian Koshland Science Museum', type: "Science"},
+		{title: 'Smithsonian National Air and Space Museum', type: "Science"},
+		{title: 'National Gallery of Art', type: "Art"},
+		{title: 'Smithsonian American Art Museum', type: "Art"},
+	];
 
 	//Operations
 	self.openFilter = function(){
@@ -27,14 +25,23 @@ function MapModelView(){
 			mapElem.style.float = "none";
 		}
 	};
+
+	self.whenClicked = function(){
+		ifClick(ko.observableArray(self.locals));
+	}
 }
 ko.applyBindings(new MapModelView());
 
 // The function to trigger the marker click, 'id' is the reference index to the 'markers' array.
+function ifClick(id){
+	for (let id = 0; id < places.length; id++){
+		google.maps.event.trigger(markers[id], 'click');		
+	}
+}
+
 function myClick(id){
 	google.maps.event.trigger(markers[id], 'click');
 }
-
 
 //The filter must be handled by knockout.------------------------------------------------------------------------------------------------/////////////
 
@@ -148,7 +155,14 @@ function showListingsScience() {
 
 //  MAP ------------------------------------------------------------------------------------------------------------------------
 let map;
-
+let places = [
+	{title: 'National Museum of American History', location: {lat: 38.891296, lng: -77.029945}},
+	{title: 'Smithsonian National Museum of Natural History', location: {lat: 38.891296, lng: -77.026131}},
+	{title: 'Marian Koshland Science Museum', location: {lat: 38.896259, lng: -77.019745}},
+	{title: 'Smithsonian National Air and Space Museum', location: {lat: 38.887562, lng: -77.019844}},
+	{title: 'National Gallery of Art', location: {lat: 38.891327,lng:  -77.019974}},
+	{title: 'Smithsonian American Art Museum', location: {lat: 38.897846, lng: -77.023064}}
+];
 // Create a new blank array for all the listing markers.
 let markers = [];
 
@@ -160,8 +174,6 @@ function initMap() {
 	  mapTypeControl: false
 	});
 
-	// These are the real estate listings that will be shown to the user.
-	// Normally we'd have these in a database instead.
 	let locations = places;
 
 	let largeInfowindow = new google.maps.InfoWindow();
