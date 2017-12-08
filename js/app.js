@@ -2,12 +2,12 @@
 function MapModelView(){
 	let self = this;
 	self.locals = [
-		{title: 'National Museum of American History', type: "History"},
-		{title: 'Smithsonian National Museum of Natural History', type: "History"},
-		{title: 'Marian Koshland Science Museum', type: "Science"},
-		{title: 'Smithsonian National Air and Space Museum', type: "Science"},
-		{title: 'National Gallery of Art', type: "Art"},
-		{title: 'Smithsonian American Art Museum', type: "Art"},
+		{title: 'National Museum of American History', type: "History", id: '0'},
+		{title: 'Smithsonian National Museum of Natural History', type: "History", id: '1'},
+		{title: 'Marian Koshland Science Museum', type: "Science", id: '2'},
+		{title: 'Smithsonian National Air and Space Museum', type: "Science", id: '3'},
+		{title: 'National Gallery of Art', type: "Art", id: '4'},
+		{title: 'Smithsonian American Art Museum', type: "Art", id: '5'},
 	];
 
 	//Operations
@@ -26,17 +26,15 @@ function MapModelView(){
 		}
 	};
 
-	self.whenClicked = function(){
-		ifClick(ko.observableArray(self.locals));
+	self.whenClicked = function(locals, index){
+		ifClick(index.id);		
 	}
 }
 ko.applyBindings(new MapModelView());
 
 // The function to trigger the marker click, 'id' is the reference index to the 'markers' array.
 function ifClick(id){
-	for (let id = 0; id < places.length; id++){
-		google.maps.event.trigger(markers[id], 'click');		
-	}
+	google.maps.event.trigger(markers[id], 'click');		
 }
 
 function myClick(id){

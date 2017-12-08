@@ -19,7 +19,7 @@
 		<!-- FILTER MENU -->
 		<div id="filterMenu">		
 			<div id="dropdownListings">
-				<h2 data-bind = "click: whenClicked" >Locations</h2>
+				<h2>Locations</h2>
 				<p>
 					<select name="" id="selection">
 						<option value="Science">Science</option>
@@ -38,9 +38,9 @@
 						<li class="Art" onclick="myClick(4);"> National Gallery of Art</li>
 						<li class="Art" onclick="myClick(5);"> Smithsonian American Art Museum</li>
 					</ul>
-
+					<h1>WITH KNOCKOUT</h1>
 					<ul data-bind="foreach: locals">
-						<li data-bind="text: $data.title, click: $root.whenClicked"></li>
+						<li data-bind="text: $data.title, click: $root.whenClicked.bind($data, $index())"></li>
 					</ul>
 
 				</div>
