@@ -2,13 +2,19 @@
 function MapModelView(){
 	let self = this;
 	self.locals = ko.observableArray([
-		{title: 'National Museum of American History', type: "History", id: '0'},
-		{title: 'Smithsonian National Museum of Natural History', type: "History", id: '1'},
-		{title: 'Marian Koshland Science Museum', type: "Science", id: '2'},
-		{title: 'Smithsonian National Air and Space Museum', type: "Science", id: '3'},
-		{title: 'National Gallery of Art', type: "Art", id: '4'},
-		{title: 'Smithsonian American Art Museum', type: "Art", id: '5'},
+		{title: 'National Museum of American History', id: '0'},
+		{title: 'Smithsonian National Museum of Natural History', id: '1'},
+		{title: 'Marian Koshland Science Museum', id: '2'},
+		{title: 'Smithsonian National Air and Space Museum', id: '3'},
+		{title: 'National Gallery of Art', id: '4'},
+		{title: 'Smithsonian American Art Museum', id: '5'},
 	]);
+
+	self.types = [
+		"History",
+		"Science",
+		"Art"
+	]
 
 	//Drop down menu hides / shows markers
 	self.selectFunction = function () {
@@ -131,6 +137,7 @@ function showArt() {
 	}	
 	mmv.showMe(true);
 }
+
 
 //  MAP ------------------------------------------------------------------------------------------------------------------------
 let map;
