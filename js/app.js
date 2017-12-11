@@ -1,15 +1,34 @@
 //Any data changes must be handled by knockout.------------------------------------------------------------------------------------------------/////////////
 function MapModelView(){
 	let self = this;
-	self.locals = [
+	self.locals = ko.observableArray([
 		{title: 'National Museum of American History', type: "History", id: '0'},
 		{title: 'Smithsonian National Museum of Natural History', type: "History", id: '1'},
 		{title: 'Marian Koshland Science Museum', type: "Science", id: '2'},
 		{title: 'Smithsonian National Air and Space Museum', type: "Science", id: '3'},
 		{title: 'National Gallery of Art', type: "Art", id: '4'},
 		{title: 'Smithsonian American Art Museum', type: "Art", id: '5'},
-	];
+	]);
 
+	//Drop down menu hides / shows markers
+	self.selectFunction = function () {
+		let selected = $("#selection option:selected").text();		
+		console.log(selected);
+		if (selected === "History"){
+			showListings();
+			showHistory();
+		}
+		else if (selected === "Science"){
+			showListings();
+			showScience();
+		}
+		else if (selected === "Art"){
+			showListings();
+			showArt();
+		}
+	}
+
+	//display list of museums
 	self.showMe = ko.observable(true);
 
 	//Operations
@@ -39,18 +58,6 @@ function MapModelView(){
 	self.hideListings =function(){
 		hideListings();		
 	}
-
-	//Drop down menu hides / shows markers
-	self.availableMuseums = [
-        {museumType: "Art"},
-        {museumType: "History"},
-        {museumType: "Science"}
-	];
-	
-	self.selectFunction = function () {
-		let listedLocations = document.getElementsByClassName("listedLocations");
-	}
-
 }
 
 let mmv = new MapModelView();
@@ -63,7 +70,18 @@ function ifClick(id){
 }
 
 // This function will loop through the markers array and display them all.
+function showList(){
+	let listedLocations = document.getElementsByClassName('listedLocations');	
+	listedLocations[0].style.visibility= 'visible';
+	listedLocations[1].style.visibility= 'visible';
+	listedLocations[2].style.visibility= 'visible';
+	listedLocations[3].style.visibility= 'visible';
+	listedLocations[4].style.visibility= 'visible';
+	listedLocations[5].style.visibility= 'visible';
+}
+
 function showListings() {
+	showList();
 	let bounds = new google.maps.LatLngBounds();
 	// Extend the boundaries of the map for each marker and display the marker
 	for (let i = 0; i < markers.length; i++) {
@@ -81,6 +99,37 @@ function hideListings() {
 		markers[i].setMap(null);
 	}
 	mmv.showMe(false);
+}
+
+function showHistory() {
+	showList();
+	for (let i = 2; i < markers.length; i++) {
+		markers[i].setMap(null);
+		document.getElementById('ul').children[i].style.visibility= 'hidden';		
+	}
+	mmv.showMe(true);
+}
+
+function showScience() {
+	showList();
+	hideListings();	
+	for (let i = 3; i < 5; i++) {
+		markers[i].setMap(map);
+		document.getElementsByClassName('listedLocations')[0].style.visibility= 'hidden';
+		document.getElementsByClassName('listedLocations')[1].style.visibility= 'hidden';
+		document.getElementsByClassName('listedLocations')[4].style.visibility= 'hidden';
+		document.getElementsByClassName('listedLocations')[5].style.visibility= 'hidden';	
+	}
+	mmv.showMe(true);	
+}
+
+function showArt() {
+	showList();
+	for (let i = 0; i < 4; i++) {
+		markers[i].setMap(null);
+		document.getElementById('ul').children[i].style.visibility= 'hidden';
+	}	
+	mmv.showMe(true);
 }
 
 //  MAP ------------------------------------------------------------------------------------------------------------------------

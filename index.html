@@ -13,20 +13,31 @@
 		
 		<!-- HEADER -->
 		<div class="header">
-			<h1> <span id="hamburgerMenu" data-bind="click: openFilter" >&#9776;</span><span id="title">Interesting Places</span></h1>			
+			<h1> 
+				<span id="hamburgerMenu" data-bind="click: openFilter" >&#9776;</span>
+				<span id="title">Interesting Places</span>
+			</h1>			
 		</div>
 
 		<!-- FILTER MENU -->
 		<div id="filterMenu">		
 			<div id="dropdownListings">
-				<h2>Locations</h2>		
+				<h2>Locations</h2>	
+				
 				<p>
-					<select id="selection" data-bind="options: $data.locals, optionsText: 'type'"></select>				
+					<select id="selection" 
+						data-bind = "
+						options: $data.locals,
+						optionsText: 'type',
+						optionsValue: locals.type,
+						optionsCaption: 'Choose Museum Type'">
+					</select>
+				
 					<button type="button" data-bind= "click: selectFunction()">Filter</button>
 				</p>
 
 				<div id="listingsList">
-					<ul data-bind="foreach: locals, visible: showMe">
+					<ul id="ul" data-bind="foreach: locals, visible: showMe">
 						<li class="listedLocations" data-bind="text: $data.title, click: $root.whenClicked.bind($data, $index())"></li>
 					</ul>
 				</div>
