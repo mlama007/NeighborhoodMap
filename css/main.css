@@ -42,9 +42,8 @@ body {
 #filterMenu {
   display: none;
   background-color: rgb(29, 28, 28);
-  color: #fff;
-  padding-left: 1.5em;
-  width: 20%;
+  color: #fff;  
+  text-align: center;
 }
 #filterMenu h2 {
   margin: 0;
@@ -54,13 +53,18 @@ body {
   padding: 1em;
 }  
 #allListings {
-  padding: 1em;
+  padding-bottom: 1em;
 }  
-
+#listingsList ul{
+  margin-bottom: 0; 
+}
 #listingsList li{
-  padding: .8em 0;
+  padding: .2em 0;
+  list-style: none;
 }
 
+
+/* Window */
 .windowPic{
   text-align: center;
   max-width: 10em;

@@ -6,7 +6,6 @@
 		<title>Neighborhood Map</title>
 		<link rel="stylesheet" href="css/main.css">
 		<link rel="stylesheet" href="css/responsive.css">
-		<style type="text/css"></style>
 		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>		
 	</head>
 	<body>
@@ -28,10 +27,11 @@
 					<select id="selection" 
 						data-bind = "
 						options: $data.types,
+						value: locals.type,
 						optionsCaption: 'Choose Museum Type'">
 					</select>
 				
-					<button type="button" data-bind= "click: selectFunction()">Filter</button>
+					<button type="button" data-bind= "click: selectFunction">Filter</button>
 				</p>
 
 				<div id="listingsList">

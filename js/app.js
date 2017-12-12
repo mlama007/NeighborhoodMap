@@ -11,28 +11,32 @@ function MapModelView(){
 	]);
 
 	self.types = [
-		"History",
-		"Science",
-		"Art"
-	]
+		"Show All",
+		"History Museums",
+		"Science Museums",
+		"Art Museums"		
+	];
 
 	//Drop down menu hides / shows markers
 	self.selectFunction = function () {
 		let selected = $("#selection option:selected").text();		
 		console.log(selected);
-		if (selected === "History"){
+		if (selected === "History Museums"){
 			showListings();
 			showHistory();
 		}
-		else if (selected === "Science"){
+		else if (selected === "Science Museums"){
 			showListings();
 			showScience();
 		}
-		else if (selected === "Art"){
+		else if (selected === "Art Museums"){
 			showListings();
 			showArt();
 		}
-	}
+		else if (selected === "Show All"){
+			showListings();
+		}
+	};
 
 	//display list of museums
 	self.showMe = ko.observable(true);
@@ -42,28 +46,23 @@ function MapModelView(){
 		let mapElem = document.getElementById('map');		
 		let filterElem = document.getElementById('filterMenu');		
 		if (filterElem.style.display == "none") {
-			filterElem.style.display = "block";
-			mapElem.style.width = "70%";
-			mapElem.style.float = "right";
-			filterElem.style.float = "left";
-		} else {
+			filterElem.style.display = "inline";		
+		} else {			
 			filterElem.style.display = "none";
-			mapElem.style.width = "100%";
-			mapElem.style.float = "none";
 		}
 	};
 
 	self.whenClicked = function(locals, index){
 		ifClick(index.id);
-	}
+	};
 
 	self.showListings =function(){
 		showListings();
-	}
+	};
 	
 	self.hideListings =function(){
 		hideListings();		
-	}
+	};
 }
 
 let mmv = new MapModelView();
@@ -77,13 +76,10 @@ function ifClick(id){
 
 // This function will loop through the markers array and display them all.
 function showList(){
-	let listedLocations = document.getElementsByClassName('listedLocations');	
-	listedLocations[0].style.visibility= 'visible';
-	listedLocations[1].style.visibility= 'visible';
-	listedLocations[2].style.visibility= 'visible';
-	listedLocations[3].style.visibility= 'visible';
-	listedLocations[4].style.visibility= 'visible';
-	listedLocations[5].style.visibility= 'visible';
+	let listedLocations = document.getElementsByClassName('listedLocations');
+	for (let j = 0; j < 6; j++){
+		listedLocations[j].style.visibility= 'visible';
+	}	
 }
 
 function showListings() {
@@ -238,20 +234,19 @@ function populateInfoWindow(marker, infowindow) {
 			'&license=1%2C2%2C3%2C4%2C5%2C6%2C7&content_type=1&lat=' + marker.position.lat() +
 			'&lon=' + marker.position.lng() + '&radius=1&radius_units=km&per_page=15&page=1' +
 			'&format=json&nojsoncallback=1';
-
+		let myPicture;
 		$.getJSON(flickrURL)
 		.done(function(data) {
 			getPicture(data);
 		})
 		.fail(function(jqxhr, textStatus, error) {
-		alert("Flickr unable to load");
+			alert("Flickr unable to load");
 		});
 		
 		function getPicture(data){
-			let myPicture = data.photos.photo[0];
-			
-			self.pictureURL = 'https://farm' + myPicture.farm + '.staticflickr.com/'
-			+ myPicture.server + '/' + myPicture.id + '_' + myPicture.secret + '.jpg';
+			myPicture = data.photos.photo[0];			
+			self.pictureURL = 'https://farm' + myPicture.farm + '.staticflickr.com/'+ myPicture.server + '/' + 
+				myPicture.id + '_' + myPicture.secret + '.jpg';
 			infowindow.setContent('<div class="window"> <p>' + marker.title + '</p><img class="windowPic" src="'+self.pictureURL+'"></img> </div>');
 		}		
 

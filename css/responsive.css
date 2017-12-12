@@ -1,7 +1,4 @@
-@media screen and (max-width: 450px) {
-    #hamburgerMenu {
-
-    }    
+@media screen and (max-width: 700px) {  
     .header{
         text-align: center;
         padding-bottom: 0;
@@ -17,25 +14,9 @@
     #filterMenu p {
         margin-top: 0.4em; 
     }
-    #filterMenu{
-        position: relative;
-        text-align: center; 
-        display: inline;
-        padding-bottom: 1em;
-    }
-    #listingsList li{
-        padding: .2em 0;
-      }
-    #dropdownListings {
-        padding: 0;
-      }  
-      #allListings {
-        padding: 0;
-      } 
-
     #map {
         margin: 0;
         height: 100%;
         width: 100%;
-    }    
+    }
 }
