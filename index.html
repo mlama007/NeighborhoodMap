@@ -36,7 +36,7 @@
 				</p>
 
 				<div id="listingsList">
-					<ul id="ul" data-bind="foreach: locals, visible: showMe">
+					<ul data-bind="foreach: locals, visible: showMe">
 						<li class="listedLocations" data-bind="text: $data.title, click: $root.whenClicked.bind($data, $index())"></li>
 					</ul>
 				</div>

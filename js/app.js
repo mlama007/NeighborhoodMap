@@ -70,10 +70,10 @@ function ifClick(id){
 
 // This function will loop through the markers array and display them all.
 function showList(){
-	let listedLocations = document.getElementsByClassName('listedLocations');
-	for (let j = 0; j < 6; j++){
-		listedLocations[j].style.visibility= 'visible';
-	}
+	// let listedLocations = document.getElementsByClassName('listedLocations');
+	// for (let j = 0; j < 6; j++){
+	// 	listedLocations[j].style.visibility= 'visible';
+	// }
 	mmv.showMe(true);	
 }
 
@@ -102,7 +102,7 @@ function showHistory() {
 	showList();
 	for (let i = 2; i < markers.length; i++) {
 		markers[i].setMap(null);
-		document.getElementById('ul').children[i].style.visibility= 'hidden';		
+		// document.getElementById('ul').children[i].style.visibility= 'hidden';		
 	}
 	mmv.showMe(true);
 }
@@ -112,10 +112,10 @@ function showScience() {
 	hideListings();	
 	for (let i = 3; i < 5; i++) {
 		markers[i].setMap(map);
-		document.getElementsByClassName('listedLocations')[0].style.visibility= 'hidden';
-		document.getElementsByClassName('listedLocations')[1].style.visibility= 'hidden';
-		document.getElementsByClassName('listedLocations')[4].style.visibility= 'hidden';
-		document.getElementsByClassName('listedLocations')[5].style.visibility= 'hidden';	
+		// document.getElementsByClassName('listedLocations')[0].style.visibility= 'hidden';
+		// document.getElementsByClassName('listedLocations')[1].style.visibility= 'hidden';
+		// document.getElementsByClassName('listedLocations')[4].style.visibility= 'hidden';
+		// document.getElementsByClassName('listedLocations')[5].style.visibility= 'hidden';	
 	}
 	mmv.showMe(true);	
 }
@@ -124,7 +124,7 @@ function showArt() {
 	showList();
 	for (let i = 0; i < 4; i++) {
 		markers[i].setMap(null);
-		document.getElementById('ul').children[i].style.visibility= 'hidden';
+		// document.getElementById('ul').children[i].style.visibility= 'hidden';
 	}	
 	mmv.showMe(true);
 }
