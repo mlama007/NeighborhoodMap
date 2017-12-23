@@ -16,14 +16,6 @@ function MapModelView(){
 		{title: 'Smithsonian American Art Museum',type: "Art", id: '5'},
 	]);
 	
-
-	self.types = [
-		"Show All",
-		"History Museums",
-		"Science Museums",
-		"Art Museums"		
-	];
-
 	//Drop down menu hides / shows markers
 	self.selectedChoice = ko.observable();
 	self.sendMe = function(){
@@ -81,7 +73,8 @@ function showList(){
 	let listedLocations = document.getElementsByClassName('listedLocations');
 	for (let j = 0; j < 6; j++){
 		listedLocations[j].style.visibility= 'visible';
-	}	
+	}
+	mmv.showMe(true);	
 }
 
 function showListings() {
@@ -89,9 +82,9 @@ function showListings() {
 	let bounds = new google.maps.LatLngBounds();
 	// Extend the boundaries of the map for each marker and display the marker
 	for (let i = 0; i < markers.length; i++) {
-	  markers[i].setMap(map);
-	  bounds.extend(markers[i].position);
-	  markers[i].animation = google.maps.Animation.DROP;
+		markers[i].setMap(map);
+		bounds.extend(markers[i].position);
+		markers[i].animation = google.maps.Animation.DROP;
 	}
 	map.fitBounds(bounds);
 	mmv.showMe(true);
