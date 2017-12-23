@@ -21,17 +21,18 @@
 		<!-- FILTER MENU -->
 		<div id="filterMenu">		
 			<div id="dropdownListings">
-				<h2>Locations</h2>	
+				<h2>Locations</h2>
 				
 				<p>
-					<select id="selection" 
-						data-bind = "
-						options: $data.types,
-						value: locals.type,
+					<select  id="selection"
+						data-bind="options: locals, 
+						optionsText: 'type', 
+						optionsValue: 'type', 
+						value: selectedChoice, 
 						optionsCaption: 'Choose Museum Type'">
 					</select>
-				
-					<button type="button" data-bind= "click: selectFunction">Filter</button>
+
+					<button type="button" data-bind= "click: sendMe, enable: selectedChoice" Value="Click Me">Filter</button>
 				</p>
 
 				<div id="listingsList">
@@ -53,6 +54,11 @@
 		<!-- SCRIPTS -->
 		<script src="js/knockout-3.2.0.js"></script>
 		<script src="js/app.js"></script>
+		<!-- <script>
+			$("#selection option").val(function(idx, val) {
+				$(this).siblings("[value='"+ val +"']").remove();
+			});
+		</script> -->
 		<script
 			async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDb6Ea35UOu4hSZjPZ7H5MJBoZaJIFTLmQ&libraries=geometry&v=3&callback=initMap" onerror="mapError()">
 		</script>

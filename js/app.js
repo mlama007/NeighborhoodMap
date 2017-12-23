@@ -1,14 +1,21 @@
-//Any data changes must be handled by knockout.------------------------------------------------------------------------------------------------/////////////
+let CountryModel = function(data){
+    var self = this;
+    self.id = ko.observable(data.id);
+    self.name = ko.observable(data.name);
+};
+
 function MapModelView(){
 	let self = this;
+
 	self.locals = ko.observableArray([
-		{title: 'National Museum of American History', id: '0'},
-		{title: 'Smithsonian National Museum of Natural History', id: '1'},
-		{title: 'Marian Koshland Science Museum', id: '2'},
-		{title: 'Smithsonian National Air and Space Museum', id: '3'},
-		{title: 'National Gallery of Art', id: '4'},
-		{title: 'Smithsonian American Art Museum', id: '5'},
+		{title: 'National Museum of American History', type: "History", id: '0'},
+		{title: 'Smithsonian National Museum of Natural History', type: "History", id: '1'},
+		{title: 'Marian Koshland Science Museum', type: "Science", id: '2'},
+		{title: 'Smithsonian National Air and Space Museum',type: "Science", id: '3'},
+		{title: 'National Gallery of Art',type: "Art", id: '4'},
+		{title: 'Smithsonian American Art Museum',type: "Art", id: '5'},
 	]);
+	
 
 	self.types = [
 		"Show All",
@@ -18,23 +25,18 @@ function MapModelView(){
 	];
 
 	//Drop down menu hides / shows markers
-	self.selectFunction = function () {
-		let selected = $("#selection option:selected").text();		
-		console.log(selected);
-		if (selected === "History Museums"){
-			showListings();
+	self.selectedChoice = ko.observable();
+	self.sendMe = function(){
+		let selected = this.selectedChoice();
+		showListings();
+		if (selected === "History"){
 			showHistory();
 		}
-		else if (selected === "Science Museums"){
-			showListings();
+		else if (selected === "Science"){
 			showScience();
 		}
-		else if (selected === "Art Museums"){
-			showListings();
+		else if (selected === "Art"){
 			showArt();
-		}
-		else if (selected === "Show All"){
-			showListings();
 		}
 	};
 
@@ -137,7 +139,7 @@ function showArt() {
 
 //  MAP ------------------------------------------------------------------------------------------------------------------------
 let map;
-let places = [
+let locations = [
 	{title: 'National Museum of American History', location: {lat: 38.891296, lng: -77.029945}},
 	{title: 'Smithsonian National Museum of Natural History', location: {lat: 38.891296, lng: -77.026131}},
 	{title: 'Marian Koshland Science Museum', location: {lat: 38.896259, lng: -77.019745}},
@@ -155,8 +157,6 @@ function initMap() {
 	  zoom: 13,
 	  mapTypeControl: false
 	});
-
-	let locations = places;
 
 	let largeInfowindow = new google.maps.InfoWindow();
 	let bounds = new google.maps.LatLngBounds();
@@ -211,9 +211,6 @@ function initMap() {
 		setTimeout(function(){ self.setAnimation(null); }, 750);
 		populateInfoWindow(this, largeInfowindow);
 	}
-
-	// document.getElementById('show-listings').addEventListener('click', showListings);
-	// document.getElementById('hide-listings').addEventListener('click', hideListings);
 }
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
@@ -238,6 +235,7 @@ function populateInfoWindow(marker, infowindow) {
 		$.getJSON(flickrURL)
 		.done(function(data) {
 			getPicture(data);
+			infowindow.open(map, marker);
 		})
 		.fail(function(jqxhr, textStatus, error) {
 			alert("Flickr unable to load");
@@ -249,10 +247,8 @@ function populateInfoWindow(marker, infowindow) {
 				myPicture.id + '_' + myPicture.secret + '.jpg';
 			infowindow.setContent('<div class="window"> <p>' + marker.title + '</p><img class="windowPic" src="'+self.pictureURL+'"></img> </div>');
 		}		
-
 //--------------------------
-
-		infowindow.open(map, marker);
+	
 		// Make sure the marker property is cleared if the infowindow is closed.
 		infowindow.addListener('closeclick',function(){
 			infowindow.setMarker = null;				
