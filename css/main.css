@@ -26,13 +26,13 @@ body {
   margin-right: 5em;
 }
 
-.header {
+header {
   background-color: rgb(29, 28, 28);
   padding: .8em 1em 2.2em 1em;
   width: 100%;
 }
 
-.header h1 {
+header h1 {
   color: #fff;
   font-size: 1.5em;
   margin: 0 0 0 .5em;

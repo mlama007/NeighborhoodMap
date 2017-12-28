@@ -1,133 +1,129 @@
-let CountryModel = function(data){
-    var self = this;
-    self.id = ko.observable(data.id);
-    self.name = ko.observable(data.name);
-};
-
-function MapModelView(){
-	let self = this;
-
-	self.locals = ko.observableArray([
-		{title: 'National Museum of American History', type: "History", id: '0'},
-		{title: 'Smithsonian National Museum of Natural History', type: "History", id: '1'},
-		{title: 'Marian Koshland Science Museum', type: "Science", id: '2'},
-		{title: 'Smithsonian National Air and Space Museum',type: "Science", id: '3'},
-		{title: 'National Gallery of Art',type: "Art", id: '4'},
-		{title: 'Smithsonian American Art Museum',type: "Art", id: '5'},
-	]);
+(() => {
+	'use strict';
 	
-	//Drop down menu hides / shows markers
-	self.selectedChoice = ko.observable();
-	self.sendMe = function(){
-		let selected = this.selectedChoice();
-		showListings();
-		if (selected === "History"){
-			showHistory();
-		}
-		else if (selected === "Science"){
-			showScience();
-		}
-		else if (selected === "Art"){
-			showArt();
-		}
-	};
-
-	//display list of museums
-	self.showMe = ko.observable(true);
-
-	//Operations
-	self.openFilter = function(){
-		let mapElem = document.getElementById('map');		
-		let filterElem = document.getElementById('filterMenu');		
-		if (filterElem.style.display == "none") {
-			filterElem.style.display = "inline";		
-		} else {			
-			filterElem.style.display = "none";
-		}
-	};
-
-	self.whenClicked = function(locals, index){
-		ifClick(index.id);
-	};
-
-	self.showListings =function(){
-		showListings();
-	};
+	/**
+	 * Mock up some museum JSON data
+	 */
+	const museumJSON = [
+	{title: 'National Museum of American History', type: "History Museums", id: '0'},
+		{title: 'Smithsonian National Museum of Natural History', type: "History Museums", id: '1'},
+		{title: 'Marian Koshland Science Museum', type: "Science Museums", id: '2'},
+		{title: 'Smithsonian National Air and Space Museum',type: "Science Museums", id: '3'},
+		{title: 'National Gallery of Art',type: "Art Museums", id: '4'},
+		{title: 'Smithsonian American Art Museum',type: "Art Museums", id: '5'},
+	];
 	
-	self.hideListings =function(){
-		hideListings();		
-	};
-}
+	/**
+	 * Knockout ViewModel class
+	 */
+	class ViewModel {
+	  	constructor() {
+			this.categoryList = [];
+	
+			// dynamically retrieve categories to
+			// create drop down list later
+			museumJSON.map(museum => {
+			if (!this.categoryList.includes(museum.type))
+				this.categoryList.push(museum.type);
+			});
+	
+			this.museumArray = ko.observableArray(museumJSON);
+			// Observable Array for drop down list
+			this.categories = ko.observableArray(this.categoryList); 
+			// This will hold the selected value from drop down menu
+			this.selectedCategory = ko.observable(); 
+	
+			this.openFilter = function(){
+				let mapElem = document.getElementById('map');		
+				let filterElem = document.getElementById('filterMenu');		
+				if (filterElem.style.display == "none") {
+					filterElem.style.display = "inline";		
+				} else {			
+					filterElem.style.display = "none";
+				}
+			};
+			this.whenClicked = function(locals, index){
+				ifClick(index.id);
+			};
 
-let mmv = new MapModelView();
-ko.applyBindings(mmv);
+
+			// The function to trigger the marker click, 'id' is the reference index to the 'markers' array.
+			function ifClick(id){
+				google.maps.event.trigger(markers[id], 'click');		
+			}
+			/**
+			 * Filter function, return filtered museum by
+			 * selected category from <select>
+			 */
+			// This function will loop through the listings and hide them all.
+			this.filterMuseum = ko.computed(() => {
+				function hideListings() {
+					for (let i = 0; i < markers.length; i++) {
+						markers[i].setMap(null);
+					}
+				}		
+				if (!this.selectedCategory()) {
+					// No input found, return all museum
+					return this.museumArray();
+				} else {
+					// input found, match museum type to filter
+					if (this.selectedCategory() === "History Museums"){
+						console.log("HM");
+						hideListings();
+						for (let i = 0; i < 2; i++) {
+							markers[i].setMap(map);
+						}
+					}
+					else if (this.selectedCategory() === "Science Museums"){
+						console.log("SM");
+						hideListings();					
+						for (let i = 2; i < 4; i++) {
+							markers[i].setMap(map);
+						}
+					}
+					else if (this.selectedCategory() === "Art Museums"){
+						console.log("AM");
+						hideListings();					
+						for (let i = 4; i < 6; i++) {
+							markers[i].setMap(map);
+						}	
+					}
+					return ko.utils.arrayFilter(this.museumArray(), (museum) => {
+					return ( museum.type === this.selectedCategory() );
+
+				});
+					
+				} //.conditional
+			}); //.filterMuseum
+		} //.constructor
+	}; //.class
+
+	// Start app
+	let vm = new ViewModel();
+	ko.applyBindings(vm);
+
+	
+  })();
+
+// function MapModelView(){
+// 	let self = this;
 
 
-// The function to trigger the marker click, 'id' is the reference index to the 'markers' array.
-function ifClick(id){
-	google.maps.event.trigger(markers[id], 'click');		
-}
+// 	self.whenClicked = function(locals, index){
+// 		ifClick(index.id);
+// 	};
 
-// This function will loop through the markers array and display them all.
-function showList(){
-	// let listedLocations = document.getElementsByClassName('listedLocations');
-	// for (let j = 0; j < 6; j++){
-	// 	listedLocations[j].style.visibility= 'visible';
-	// }
-	mmv.showMe(true);	
-}
 
-function showListings() {
-	showList();
-	let bounds = new google.maps.LatLngBounds();
-	// Extend the boundaries of the map for each marker and display the marker
-	for (let i = 0; i < markers.length; i++) {
-		markers[i].setMap(map);
-		bounds.extend(markers[i].position);
-		markers[i].animation = google.maps.Animation.DROP;
-	}
-	map.fitBounds(bounds);
-	mmv.showMe(true);
-}
+// let mmv = new MapModelView();
+// ko.applyBindings(mmv);
 
-// This function will loop through the listings and hide them all.
-function hideListings() {
-	for (let i = 0; i < markers.length; i++) {
-		markers[i].setMap(null);
-	}
-	mmv.showMe(false);
-}
 
-function showHistory() {
-	showList();
-	for (let i = 2; i < markers.length; i++) {
-		markers[i].setMap(null);
-		// document.getElementById('ul').children[i].style.visibility= 'hidden';		
-	}
-	mmv.showMe(true);
-}
+// // The function to trigger the marker click, 'id' is the reference index to the 'markers' array.
+// function ifClick(id){
+// 	google.maps.event.trigger(markers[id], 'click');		
+// }
 
-function showScience() {
-	showList();
-	hideListings();	
-	for (let i = 3; i < 5; i++) {
-		markers[i].setMap(map);
-		// document.getElementsByClassName('listedLocations')[0].style.visibility= 'hidden';
-		// document.getElementsByClassName('listedLocations')[1].style.visibility= 'hidden';
-		// document.getElementsByClassName('listedLocations')[4].style.visibility= 'hidden';
-		// document.getElementsByClassName('listedLocations')[5].style.visibility= 'hidden';	
-	}
-	mmv.showMe(true);	
-}
 
-function showArt() {
-	showList();
-	for (let i = 0; i < 4; i++) {
-		markers[i].setMap(null);
-		// document.getElementById('ul').children[i].style.visibility= 'hidden';
-	}	
-	mmv.showMe(true);
-}
 
 
 //  MAP ------------------------------------------------------------------------------------------------------------------------
@@ -201,7 +197,7 @@ function initMap() {
 	function clicked() {
 		let self = this;
 		self.setAnimation(google.maps.Animation.BOUNCE);
-		setTimeout(function(){ self.setAnimation(null); }, 750);
+		setTimeout(function(){ self.setAnimation(null); }, 1400);
 		populateInfoWindow(this, largeInfowindow);
 	}
 }

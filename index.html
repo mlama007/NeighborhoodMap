@@ -6,17 +6,16 @@
 		<title>Neighborhood Map</title>
 		<link rel="stylesheet" href="css/main.css">
 		<link rel="stylesheet" href="css/responsive.css">
-		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>		
 	</head>
 	<body>
 		
 		<!-- HEADER -->
-		<div class="header">
+		<header>
 			<h1> 
-				<span id="hamburgerMenu" data-bind="click: openFilter" >&#9776;</span>
+				<span id="hamburgerMenu" data-bind = "click: openFilter()" >&#9776;</span>
 				<span id="title">Interesting Places</span>
 			</h1>			
-		</div>
+		</header>
 
 		<!-- FILTER MENU -->
 		<div id="filterMenu">		
@@ -24,27 +23,16 @@
 				<h2>Locations</h2>
 				
 				<p>
-					<select id="selection"
-						data-bind="options: locals, 
-						optionsText: 'type', 
-						optionsValue: 'type', 
-						value: selectedChoice, 
-						optionsCaption: 'Choose Museum Type'">
-					</select>
-
-					<button type="button" data-bind= "click: sendMe, enable: selectedChoice" Value="Click Me">Filter</button>
+					<select data-bind="options: categories,
+					optionsCaption: 'Choose category to filter',
+					value: selectedCategory"></select>
 				</p>
 
 				<div id="listingsList">
-					<ul data-bind="foreach: locals, visible: showMe">
-						<li class="listedLocations" data-bind="text: $data.title, click: $root.whenClicked.bind($data, $index())"></li>
+					<ul data-bind="foreach: filterMuseum">
+						<li><span data-bind="text: $data.title, click: $root.whenClicked.bind($data, $index())"></span> (<span data-bind="text: $data.type"></span>)</li>
 					</ul>
 				</div>
-			</div>
-
-			<div id="allListings">
-				<input id="show-listings" data-bind="click: showListings" type="button" value="Show All Listings">
-				<input id="hide-listings" data-bind="click: hideListings" type="button" value="Hide All Listings">
 			</div>
 		</div>
 			
@@ -52,7 +40,8 @@
 		<div id="map"></div>
 
 		<!-- SCRIPTS -->
-		<script src="js/knockout-3.2.0.js"></script>
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>		
+		<script src="js/knockout-3.4.0.js"></script>
 		<script src="js/app.js"></script>
 		<script
 			async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDb6Ea35UOu4hSZjPZ7H5MJBoZaJIFTLmQ&libraries=geometry&v=3&callback=initMap" onerror="mapError()">
