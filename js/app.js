@@ -1,9 +1,8 @@
 (() => {
 	'use strict';
 	
-	/**
-	 * Mock up some museum JSON data
-	 */
+	
+	// Mock up some museum JSON data	
 	const museumJSON = [
 	{title: 'National Museum of American History', type: "History Museums", id: '0'},
 		{title: 'Smithsonian National Museum of Natural History', type: "History Museums", id: '1'},
@@ -13,9 +12,8 @@
 		{title: 'Smithsonian American Art Museum',type: "Art Museums", id: '5'},
 	];
 	
-	/**
-	 * Knockout ViewModel class
-	 */
+	
+	// Knockout ViewModel class
 	class ViewModel {
 	  	constructor() {
 			this.categoryList = [];
@@ -45,18 +43,14 @@
 			this.whenClicked = function(locals, index){
 				ifClick(index.id);
 			};
-
-
 			// The function to trigger the marker click, 'id' is the reference index to the 'markers' array.
 			function ifClick(id){
 				google.maps.event.trigger(markers[id], 'click');		
 			}
-			/**
-			 * Filter function, return filtered museum by
-			 * selected category from <select>
-			 */
-			// This function will loop through the listings and hide them all.
+
+			//Filter function, return filtered museum by selected category from <select>
 			this.filterMuseum = ko.computed(() => {
+				// This function will loop through the listings and hide them all.
 				function hideListings() {
 					for (let i = 0; i < markers.length; i++) {
 						markers[i].setMap(null);
@@ -90,41 +84,15 @@
 					}
 					return ko.utils.arrayFilter(this.museumArray(), (museum) => {
 					return ( museum.type === this.selectedCategory() );
-
-				});
-					
+				});					
 				} //.conditional
 			}); //.filterMuseum
 		} //.constructor
 	}; //.class
-
 	// Start app
 	let vm = new ViewModel();
-	ko.applyBindings(vm);
-
-	
-  })();
-
-// function MapModelView(){
-// 	let self = this;
-
-
-// 	self.whenClicked = function(locals, index){
-// 		ifClick(index.id);
-// 	};
-
-
-// let mmv = new MapModelView();
-// ko.applyBindings(mmv);
-
-
-// // The function to trigger the marker click, 'id' is the reference index to the 'markers' array.
-// function ifClick(id){
-// 	google.maps.event.trigger(markers[id], 'click');		
-// }
-
-
-
+	ko.applyBindings(vm);	
+})();
 
 //  MAP ------------------------------------------------------------------------------------------------------------------------
 let map;
