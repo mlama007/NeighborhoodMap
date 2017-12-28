@@ -4,7 +4,7 @@
 	
 	// Mock up some museum JSON data	
 	const museumJSON = [
-	{title: 'National Museum of American History', type: "History Museums", id: '0'},
+		{title: 'National Museum of American History', type: "History Museums", id: '0'},
 		{title: 'Smithsonian National Museum of Natural History', type: "History Museums", id: '1'},
 		{title: 'Marian Koshland Science Museum', type: "Science Museums", id: '2'},
 		{title: 'Smithsonian National Air and Space Museum',type: "Science Museums", id: '3'},
@@ -16,7 +16,7 @@
 	// Knockout ViewModel class
 	class ViewModel {
 	  	constructor() {
-			this.categoryList = [];
+			this.categoryList = ["Show All", "Hide All"];
 	
 			// dynamically retrieve categories to
 			// create drop down list later
@@ -55,32 +55,40 @@
 					for (let i = 0; i < markers.length; i++) {
 						markers[i].setMap(null);
 					}
-				}		
+				}	
+				function showListings(){
+					for (let i = 0; i < markers.length; i++) {
+						markers[i].setMap(map);
+					}
+				}	
 				if (!this.selectedCategory()) {
-					// No input found, return all museum
-					return this.museumArray();
+					console.log("nothing selected");
 				} else {
 					// input found, match museum type to filter
 					if (this.selectedCategory() === "History Museums"){
-						console.log("HM");
 						hideListings();
 						for (let i = 0; i < 2; i++) {
 							markers[i].setMap(map);
 						}
 					}
 					else if (this.selectedCategory() === "Science Museums"){
-						console.log("SM");
 						hideListings();					
 						for (let i = 2; i < 4; i++) {
 							markers[i].setMap(map);
 						}
 					}
 					else if (this.selectedCategory() === "Art Museums"){
-						console.log("AM");
 						hideListings();					
 						for (let i = 4; i < 6; i++) {
 							markers[i].setMap(map);
 						}	
+					}
+					else if (this.selectedCategory() === "Show All"){
+						showListings();
+						return this.museumArray();
+					}
+					else {
+						hideListings();
 					}
 					return ko.utils.arrayFilter(this.museumArray(), (museum) => {
 					return ( museum.type === this.selectedCategory() );
