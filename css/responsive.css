@@ -1,7 +1,7 @@
 @media screen and (max-width: 700px) {  
     .header{
         text-align: center;
-        padding-bottom: 0;
+        padding: 0;        
     }
     .header h1 {
         font-size: 1em;
@@ -18,5 +18,17 @@
         margin: 0;
         height: 100%;
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 700px) {  
+    #hamburgerMenu {
+        margin: .5em 1em;
+    }
+    #title {
+        margin: .5em 1em;
+    }
+    #dropdownListings h2{
+        padding-right: 3em;
     }
 }
