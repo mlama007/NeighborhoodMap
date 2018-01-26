@@ -2,6 +2,7 @@ TODO list
 ======================
 ### Overview
 https://mlama007.github.io/NeighborhoodMap/
+
 With this application, you will be able to see some interesting location spots! 
 You can also filter through the locations.
 
